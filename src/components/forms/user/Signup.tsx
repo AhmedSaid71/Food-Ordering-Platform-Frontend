@@ -35,8 +35,8 @@ const Signup = () => {
   const onSubmit = (data: TSignupCredentialsValidator) => {
     dispatch(signup(data))
       .unwrap()
-      .then(() => {
-        toast.success("You can now login");
+      .then(({message}) => {
+        toast.success(message);
         navigate("/login");
       })
       .catch((err) => toast.error(err));

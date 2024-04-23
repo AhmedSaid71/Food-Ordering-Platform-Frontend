@@ -58,7 +58,23 @@ const App = () => {
   return (
     <Provider store={store}>
       {loading ? <Spinner /> : <RouterProvider router={router} />}
-      <Toaster position="top-center" />
+      <Toaster
+        position="top-center"
+        gutter={12}
+        containerStyle={{ margin: "8px" }}
+        toastOptions={{
+          success: {
+            duration: 4000,
+          },
+          error: {
+            duration: 5000,
+          },
+          style: {
+            fontSize: "16px",
+            textAlign: "center",
+          },
+        }}
+      />
     </Provider>
   );
 };

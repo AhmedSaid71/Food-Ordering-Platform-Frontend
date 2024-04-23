@@ -10,6 +10,7 @@ interface IUserInitialState {
   user: IUser | null;
   loading: boolean;
   error: null | string;
+  message: null | string;
 }
 
 export type { IUser, IUserInitialState };

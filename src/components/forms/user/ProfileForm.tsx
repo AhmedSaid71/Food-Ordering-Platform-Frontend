@@ -37,8 +37,8 @@ const ProfileForm = () => {
   const onSubmit = (data: TUpdateProfileValidator) => {
     dispatch(updateUser(data))
       .unwrap()
-      .then(() => {
-        toast.success("Your profile has been updated");
+      .then(({ message }) => {
+        toast.success(message);
       })
       .catch((err) => toast.error(err));
   };

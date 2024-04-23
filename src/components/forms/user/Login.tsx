@@ -34,8 +34,8 @@ const Login = () => {
   const onSubmit = (data: TLoginCredentialsValidator) => {
     dispatch(login(data))
       .unwrap()
-      .then(() => {
-        toast.success("Welcome to MearnEats!. Happy eating");
+      .then((message) => {
+        toast.success(message);
         navigate("/");
       })
       .catch((err) => {

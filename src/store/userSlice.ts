@@ -24,8 +24,9 @@ export const updateUser = createAsyncThunk(
     const { rejectWithValue } = thunkAPI;
     try {
       const res = await api.patch("/user/updateMe", data);
-      console.log(res.data);
-      return res.data;
+      const message = res.data.message;
+      const user = res.data.data.user;
+      return { user, message };
     } catch (error) {
       return rejectWithValue(axiosErrorHandler(error));
     }
@@ -36,6 +37,7 @@ const initialState: IUserInitialState = {
   user: null,
   error: null,
   loading: false,
+  message: null,
 };
 
 const userSlice = createSlice({
@@ -68,7 +70,8 @@ const userSlice = createSlice({
       })
       .addCase(updateUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload.data.user;
+        state.user = action.payload.user;
+        state.message = action.payload.message;
       })
       .addCase(updateUser.rejected, (state, action) => {
         state.loading = false;
