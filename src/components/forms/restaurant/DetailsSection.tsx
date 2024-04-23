@@ -7,9 +7,13 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useAppSelector } from "@/hooks/useReduxHooks";
+import { getRestaurantStatus } from "@/store/restaurantSlice";
 import { useFormContext } from "react-hook-form";
 
 const DetailsSection = () => {
+  const { loading } = useAppSelector(getRestaurantStatus);
+
   const { control } = useFormContext();
   return (
     <div className="space-y-2">
@@ -26,7 +30,7 @@ const DetailsSection = () => {
           <FormItem>
             <FormLabel>Name</FormLabel>
             <FormControl>
-              <Input {...field} className="bg-white" />
+              <Input {...field} className="bg-white" disabled={loading} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -40,7 +44,7 @@ const DetailsSection = () => {
             <FormItem className="flex-1">
               <FormLabel>City</FormLabel>
               <FormControl>
-                <Input {...field} className="bg-white" />
+                <Input {...field} className="bg-white" disabled={loading} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -53,7 +57,7 @@ const DetailsSection = () => {
             <FormItem className="flex-1">
               <FormLabel>Country</FormLabel>
               <FormControl>
-                <Input {...field} className="bg-white" />
+                <Input {...field} className="bg-white" disabled={loading} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -68,7 +72,12 @@ const DetailsSection = () => {
           <FormItem className="max-w-[25%]">
             <FormLabel>Delivery price (£)</FormLabel>
             <FormControl>
-              <Input {...field} className="bg-white" placeholder="1.50" />
+              <Input
+                {...field}
+                className="bg-white"
+                placeholder="1.50"
+                disabled={loading}
+              />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -81,7 +90,12 @@ const DetailsSection = () => {
           <FormItem className="max-w-[25%]">
             <FormLabel>Estimated Delivery Time (minutes)</FormLabel>
             <FormControl>
-              <Input {...field} className="bg-white" placeholder="30" />
+              <Input
+                {...field}
+                className="bg-white"
+                placeholder="30"
+                disabled={loading}
+              />
             </FormControl>
             <FormMessage />
           </FormItem>

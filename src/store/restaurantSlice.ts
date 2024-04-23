@@ -15,6 +15,19 @@ export const createRestaurant = createAsyncThunk(
     }
   }
 );
+export const getRestaurant = createAsyncThunk(
+  "restaurant/getRestaurant",
+  async (_, thunkAPI) => {
+    const { rejectWithValue } = thunkAPI;
+    try {
+      const res = await api.get("/restaurant");
+      console.log(res)
+      return res.data.data;
+    } catch (error) {
+      return rejectWithValue(axiosErrorHandler(error));
+    }
+  }
+);
 
 const initialState: IRestaurantInitialState = {
   restaurant: null,
@@ -47,7 +60,8 @@ const restaurantSlice = createSlice({
 
 export default restaurantSlice.reducer;
 
-export const getRestaurant = (state: RootState) => state.restaurant.restaurant;
+export const getRestaurantObj = (state: RootState) =>
+  state.restaurant.restaurant;
 export const getRestaurantStatus = (state: RootState) => {
   const { loading, error } = state.restaurant;
   return { loading, error };

@@ -7,14 +7,13 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useAppSelector } from "@/hooks/useReduxHooks";
+import { getRestaurantStatus } from "@/store/restaurantSlice";
+import { IMenuItemInput } from "@/types";
 import { useFormContext } from "react-hook-form";
 
-type Props = {
-  index: number;
-  removeMenuItem: () => void;
-};
-
-const MenuItemInput = ({ index, removeMenuItem }: Props) => {
+const MenuItemInput = ({ index, removeMenuItem }: IMenuItemInput) => {
+  const { loading } = useAppSelector(getRestaurantStatus);
   const { control } = useFormContext();
 
   return (
@@ -32,6 +31,7 @@ const MenuItemInput = ({ index, removeMenuItem }: Props) => {
                 {...field}
                 placeholder="Cheese Pizza"
                 className="bg-white"
+                disabled={loading}
               />
             </FormControl>
           </FormItem>
@@ -46,7 +46,12 @@ const MenuItemInput = ({ index, removeMenuItem }: Props) => {
               Price (£) <FormMessage />
             </FormLabel>
             <FormControl>
-              <Input {...field} placeholder="8.00" className="bg-white" />
+              <Input
+                {...field}
+                placeholder="8.00"
+                className="bg-white"
+                disabled={loading}
+              />
             </FormControl>
           </FormItem>
         )}
@@ -55,6 +60,7 @@ const MenuItemInput = ({ index, removeMenuItem }: Props) => {
         type="button"
         onClick={removeMenuItem}
         className="bg-red-500 max-h-fit"
+        disabled={loading}
       >
         Remove
       </Button>

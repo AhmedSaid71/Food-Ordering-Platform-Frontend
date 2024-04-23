@@ -6,10 +6,13 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useAppSelector } from "@/hooks/useReduxHooks";
+import { getRestaurantStatus } from "@/store/restaurantSlice";
 import { useFormContext } from "react-hook-form";
 
 const ImageSection = () => {
   const { control, watch } = useFormContext();
+  const { loading } = useAppSelector(getRestaurantStatus);
 
   const existingImageUrl = watch("imageUrl");
 
@@ -34,6 +37,7 @@ const ImageSection = () => {
                   className="bg-white"
                   type="file"
                   accept=".jpg, .jpeg, .png"
+                  disabled={loading}
                   onChange={(event) =>
                     field.onChange(
                       event.target.files ? event.target.files[0] : null
