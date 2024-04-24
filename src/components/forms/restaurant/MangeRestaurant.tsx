@@ -59,6 +59,7 @@ const MangeRestaurant = () => {
     form.reset(updatedRestaurant);
   }, [form, restaurant]);
 
+  console.log(restaurant?.cuisines);
   const onSubmit = (formDataJson: TMangeRestaurantValidator) => {
     const formData = new FormData();
 
@@ -94,7 +95,7 @@ const MangeRestaurant = () => {
       .unwrap()
       .then(({ message }) => {
         toast.success(message);
-        window.location.reload();
+        // window.location.reload();
       })
       .catch((error) => {
         toast.error(error);
