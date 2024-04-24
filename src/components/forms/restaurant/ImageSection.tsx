@@ -1,3 +1,4 @@
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 import {
   FormControl,
   FormDescription,
@@ -6,19 +7,16 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useAppSelector } from "@/hooks/useReduxHooks";
-import { getRestaurantStatus } from "@/store/restaurantSlice";
 import { useFormContext } from "react-hook-form";
 
 const ImageSection = () => {
   const { control, watch } = useFormContext();
-  const { loading } = useAppSelector(getRestaurantStatus);
 
   const existingImageUrl = watch("imageUrl");
 
   return (
     <div className="space-y-2">
-      <div>
+      <div className="mb-6">
         <h2 className="text-2xl font-bold">Image</h2>
         <FormDescription>
           Add an image that will be displayed on your restaurant listing in the
@@ -27,6 +25,15 @@ const ImageSection = () => {
       </div>
 
       <div className="flex flex-col gap-8 md:w-[50%]">
+        {existingImageUrl && (
+          <AspectRatio ratio={16 / 9}>
+            <img
+              src={existingImageUrl}
+              className="rounded-md object-cover h-full w-full"
+              alt="restaurant Image"
+            />
+          </AspectRatio>
+        )}
         <FormField
           control={control}
           name="imageFile"
@@ -37,7 +44,6 @@ const ImageSection = () => {
                   className="bg-white"
                   type="file"
                   accept=".jpg, .jpeg, .png"
-                  disabled={loading}
                   onChange={(event) =>
                     field.onChange(
                       event.target.files ? event.target.files[0] : null

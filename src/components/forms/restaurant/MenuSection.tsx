@@ -2,11 +2,8 @@ import { Button } from "@/components/ui/button";
 import { FormDescription, FormField, FormItem } from "@/components/ui/form";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import MenuItemInput from "./MenuItemInput";
-import { useAppSelector } from "@/hooks/useReduxHooks";
-import { getRestaurantStatus } from "@/store/restaurantSlice";
 
 const MenuSection = () => {
-  const { loading } = useAppSelector(getRestaurantStatus);
   const { control } = useFormContext();
 
   const { fields, append, remove } = useFieldArray({
@@ -36,11 +33,7 @@ const MenuSection = () => {
           </FormItem>
         )}
       />
-      <Button
-        type="button"
-        onClick={() => append({ name: "", price: "" })}
-        disabled={loading}
-      >
+      <Button type="button" onClick={() => append({ name: "", price: "" })}>
         Add Menu Item
       </Button>
     </div>

@@ -7,17 +7,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useAppSelector } from "@/hooks/useReduxHooks";
-import { getRestaurantStatus } from "@/store/restaurantSlice";
 import { IMenuItemInput } from "@/types";
 import { useFormContext } from "react-hook-form";
 
 const MenuItemInput = ({ index, removeMenuItem }: IMenuItemInput) => {
-  const { loading } = useAppSelector(getRestaurantStatus);
   const { control } = useFormContext();
 
   return (
-    <div className="flex flex-row items-end gap-2">
+    <div className="flex  flex-col sm:flex-row sm:items-end gap-2">
       <FormField
         control={control}
         name={`menuItems.${index}.name`}
@@ -31,7 +28,6 @@ const MenuItemInput = ({ index, removeMenuItem }: IMenuItemInput) => {
                 {...field}
                 placeholder="Cheese Pizza"
                 className="bg-white"
-                disabled={loading}
               />
             </FormControl>
           </FormItem>
@@ -46,12 +42,7 @@ const MenuItemInput = ({ index, removeMenuItem }: IMenuItemInput) => {
               Price (£) <FormMessage />
             </FormLabel>
             <FormControl>
-              <Input
-                {...field}
-                placeholder="8.00"
-                className="bg-white"
-                disabled={loading}
-              />
+              <Input {...field} placeholder="8.00" className="bg-white" />
             </FormControl>
           </FormItem>
         )}
@@ -60,7 +51,6 @@ const MenuItemInput = ({ index, removeMenuItem }: IMenuItemInput) => {
         type="button"
         onClick={removeMenuItem}
         className="bg-red-500 max-h-fit"
-        disabled={loading}
       >
         Remove
       </Button>

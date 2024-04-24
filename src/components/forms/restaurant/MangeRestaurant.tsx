@@ -1,5 +1,7 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import toast from "react-hot-toast";
 
 import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
 import { Form } from "@/components/ui/form";
@@ -9,15 +11,18 @@ import CuisinesSection from "./CuisinesSection";
 import MenuSection from "./MenuSection";
 import ImageSection from "./ImageSection";
 import { Button } from "@/components/ui/button";
-import { createRestaurant, getRestaurantStatus } from "@/store/restaurantSlice";
+import LoadingButton from "@/components/shared/LoadingButton";
+import {
+  createRestaurant,
+  getRestaurantData,
+  getRestaurantStatus,
+} from "@/store/restaurantSlice";
 
 import { MangeRestaurantValidator, TMangeRestaurantValidator } from "@/types";
-import LoadingButton from "@/components/shared/LoadingButton";
-import toast from "react-hot-toast";
 
 const MangeRestaurant = () => {
   const { loading } = useAppSelector(getRestaurantStatus);
-
+  const restaurant = useAppSelector(getRestaurantData);
   const dispatch = useAppDispatch();
   const form = useForm<TMangeRestaurantValidator>({
     resolver: zodResolver(MangeRestaurantValidator),
@@ -25,7 +30,31 @@ const MangeRestaurant = () => {
       cuisines: [],
       menuItems: [{ name: "", price: 0 }],
     },
+    disabled: loading,
   });
+
+  useEffect(() => {
+    if (!restaurant) {
+      return;
+    }
+
+    const deliveryPriceFormatted = parseInt(
+      (restaurant.deliveryPrice / 100).toFixed(2)
+    );
+
+    const menuItemsFormatted = restaurant.menuItems.map((item) => ({
+      ...item,
+      price: parseInt((item.price / 100).toFixed(2)),
+    }));
+
+    const updatedRestaurant = {
+      ...restaurant,
+      deliveryPrice: deliveryPriceFormatted,
+      menuItems: menuItemsFormatted,
+    };
+
+    form.reset(updatedRestaurant);
+  }, [form, restaurant]);
 
   const onSubmit = (formDataJson: TMangeRestaurantValidator) => {
     const formData = new FormData();
@@ -70,7 +99,7 @@ const MangeRestaurant = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-8 bg-gray-50 p-10 rounded-lg"
+        className="space-y-8 bg-gray-50 p-5 sm:p-10 rounded-lg"
       >
         <DetailsSection />
         <Separator />

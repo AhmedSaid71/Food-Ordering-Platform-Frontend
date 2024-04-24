@@ -22,6 +22,8 @@ interface IRestaurantInitialState {
   restaurant: IRestaurant | null;
   loading: boolean;
   error: string | null;
+  message: string | null;
+  isCreating: boolean;
 }
 
 export type { IMenuItem, IRestaurant, IRestaurantInitialState };

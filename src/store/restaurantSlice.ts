@@ -9,7 +9,9 @@ export const createRestaurant = createAsyncThunk(
     const { rejectWithValue } = thunkAPI;
     try {
       const res = await api.post("/restaurant", data);
-      return res.data.data;
+      const restaurant = res.data.data.restaurant;
+      const message = res.data.message;
+      return { restaurant, message };
     } catch (error) {
       return rejectWithValue(axiosErrorHandler(error));
     }
@@ -21,8 +23,8 @@ export const getRestaurant = createAsyncThunk(
     const { rejectWithValue } = thunkAPI;
     try {
       const res = await api.get("/restaurant");
-      console.log(res)
-      return res.data.data;
+      const restaurant = res.data.data.restaurant;
+      return restaurant;
     } catch (error) {
       return rejectWithValue(axiosErrorHandler(error));
     }
@@ -33,6 +35,8 @@ const initialState: IRestaurantInitialState = {
   restaurant: null,
   loading: false,
   error: null,
+  message: null,
+  isCreating: false,
 };
 
 const restaurantSlice = createSlice({
@@ -44,12 +48,30 @@ const restaurantSlice = createSlice({
       .addCase(createRestaurant.pending, (state) => {
         state.loading = true;
         state.error = null;
+        state.isCreating = true;
       })
       .addCase(createRestaurant.fulfilled, (state, action) => {
         state.loading = false;
         state.restaurant = action.payload.restaurant;
+        state.message = action.payload.message;
+        state.isCreating = false;
       })
       .addCase(createRestaurant.rejected, (state, action) => {
+        state.loading = false;
+        state.isCreating = false;
+        if (isString(action.payload)) {
+          state.error = action.payload;
+        }
+      })
+      .addCase(getRestaurant.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getRestaurant.fulfilled, (state, action) => {
+        state.loading = false;
+        state.restaurant = action.payload;
+      })
+      .addCase(getRestaurant.rejected, (state, action) => {
         state.loading = false;
         if (isString(action.payload)) {
           state.error = action.payload;
@@ -60,9 +82,9 @@ const restaurantSlice = createSlice({
 
 export default restaurantSlice.reducer;
 
-export const getRestaurantObj = (state: RootState) =>
+export const getRestaurantData = (state: RootState) =>
   state.restaurant.restaurant;
 export const getRestaurantStatus = (state: RootState) => {
-  const { loading, error } = state.restaurant;
-  return { loading, error };
+  const { loading, error, isCreating } = state.restaurant;
+  return { loading, error, isCreating };
 };

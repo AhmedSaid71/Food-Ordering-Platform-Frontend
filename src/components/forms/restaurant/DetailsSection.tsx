@@ -7,13 +7,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useAppSelector } from "@/hooks/useReduxHooks";
-import { getRestaurantStatus } from "@/store/restaurantSlice";
 import { useFormContext } from "react-hook-form";
 
 const DetailsSection = () => {
-  const { loading } = useAppSelector(getRestaurantStatus);
-
   const { control } = useFormContext();
   return (
     <div className="space-y-2">
@@ -30,13 +26,13 @@ const DetailsSection = () => {
           <FormItem>
             <FormLabel>Name</FormLabel>
             <FormControl>
-              <Input {...field} className="bg-white" disabled={loading} />
+              <Input {...field} className="bg-white" />
             </FormControl>
             <FormMessage />
           </FormItem>
         )}
       />
-      <div className="flex gap-4">
+      <div className="flex gap-4 flex-col sm:flex-row">
         <FormField
           control={control}
           name="city"
@@ -44,7 +40,7 @@ const DetailsSection = () => {
             <FormItem className="flex-1">
               <FormLabel>City</FormLabel>
               <FormControl>
-                <Input {...field} className="bg-white" disabled={loading} />
+                <Input {...field} className="bg-white" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -57,7 +53,7 @@ const DetailsSection = () => {
             <FormItem className="flex-1">
               <FormLabel>Country</FormLabel>
               <FormControl>
-                <Input {...field} className="bg-white" disabled={loading} />
+                <Input {...field} className="bg-white" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -69,15 +65,10 @@ const DetailsSection = () => {
         control={control}
         name="deliveryPrice"
         render={({ field }) => (
-          <FormItem className="max-w-[25%]">
+          <FormItem className="md:max-w-[25%]">
             <FormLabel>Delivery price (£)</FormLabel>
             <FormControl>
-              <Input
-                {...field}
-                className="bg-white"
-                placeholder="1.50"
-                disabled={loading}
-              />
+              <Input {...field} className="bg-white" placeholder="1.50" />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -87,15 +78,10 @@ const DetailsSection = () => {
         control={control}
         name="estimatedDeliveryTime"
         render={({ field }) => (
-          <FormItem className="max-w-[25%]">
+          <FormItem className="md:max-w-[25%]">
             <FormLabel>Estimated Delivery Time (minutes)</FormLabel>
             <FormControl>
-              <Input
-                {...field}
-                className="bg-white"
-                placeholder="30"
-                disabled={loading}
-              />
+              <Input {...field} className="bg-white" placeholder="30" />
             </FormControl>
             <FormMessage />
           </FormItem>
