@@ -16,6 +16,7 @@ import {
   createRestaurant,
   getRestaurantData,
   getRestaurantStatus,
+  updateRestaurant,
 } from "@/store/restaurantSlice";
 
 import { MangeRestaurantValidator, TMangeRestaurantValidator } from "@/types";
@@ -24,6 +25,8 @@ const MangeRestaurant = () => {
   const { loading } = useAppSelector(getRestaurantStatus);
   const restaurant = useAppSelector(getRestaurantData);
   const dispatch = useAppDispatch();
+  const isEditing = !!restaurant;
+
   const form = useForm<TMangeRestaurantValidator>({
     resolver: zodResolver(MangeRestaurantValidator),
     defaultValues: {
@@ -85,10 +88,13 @@ const MangeRestaurant = () => {
     if (formDataJson.imageFile) {
       formData.append(`imageFile`, formDataJson.imageFile);
     }
-    dispatch(createRestaurant(formData))
+    dispatch(
+      isEditing ? updateRestaurant(formData) : createRestaurant(formData)
+    )
       .unwrap()
-      .then(() => {
-        toast.success("Your restaurant has been created successfully");
+      .then(({ message }) => {
+        toast.success(message);
+        window.location.reload();
       })
       .catch((error) => {
         toast.error(error);
@@ -111,7 +117,7 @@ const MangeRestaurant = () => {
         {loading ? (
           <LoadingButton title="submitting" />
         ) : (
-          <Button type="submit">Submit</Button>
+          <Button type="submit">{isEditing ? "Update" : "Create"}</Button>
         )}
       </form>
     </Form>

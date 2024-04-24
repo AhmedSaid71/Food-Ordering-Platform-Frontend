@@ -30,6 +30,20 @@ export const getRestaurant = createAsyncThunk(
     }
   }
 );
+export const updateRestaurant = createAsyncThunk(
+  "restaurant/updateRestaurant",
+  async (data: FormData, thunkAPI) => {
+    const { rejectWithValue } = thunkAPI;
+    try {
+      const res = await api.patch("/restaurant", data);
+      const restaurant = res.data.data.restaurant;
+      const message = res.data.message;
+      return { restaurant, message };
+    } catch (error) {
+      return rejectWithValue(axiosErrorHandler(error));
+    }
+  }
+);
 
 const initialState: IRestaurantInitialState = {
   restaurant: null,
@@ -72,6 +86,21 @@ const restaurantSlice = createSlice({
         state.restaurant = action.payload;
       })
       .addCase(getRestaurant.rejected, (state, action) => {
+        state.loading = false;
+        if (isString(action.payload)) {
+          state.error = action.payload;
+        }
+      })
+      .addCase(updateRestaurant.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateRestaurant.fulfilled, (state, action) => {
+        state.loading = false;
+        state.restaurant = action.payload.restaurant;
+        state.message = action.payload.message;
+      })
+      .addCase(updateRestaurant.rejected, (state, action) => {
         state.loading = false;
         if (isString(action.payload)) {
           state.error = action.payload;
