@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import { CircleUserRound } from "lucide-react";
 import {
   DropdownMenu,
@@ -5,18 +6,28 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Separator } from "../ui/separator";
 import { Button } from "../ui/button";
 import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
-import { getAuthObj, logout } from "@/store/authSlice";
 import { getUser } from "@/store/userSlice";
-import toast from "react-hot-toast";
+import { logout } from "@/services/apiAuth";
 
 const UserMenu = () => {
+  const navigate = useNavigate();
   const user = useAppSelector(getUser);
-  const { error } = useAppSelector(getAuthObj);
   const dispatch = useAppDispatch();
+
+  const handleClick = () => {
+    dispatch(logout())
+      .unwrap()
+      .then((message) => {
+        toast.success(message);
+        navigate("/", { replace: true });
+      })
+      .catch((err) => toast.error(err));
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="flex items-center px-3 font-bold hover:text-orange-500 gap-2">
@@ -43,18 +54,7 @@ const UserMenu = () => {
         <Separator />
         <DropdownMenuItem>
           <Button
-            onClick={() =>
-              dispatch(logout())
-                .unwrap()
-                .then(() => {
-                  if (error) {
-                    return toast.error(
-                      "Something went wrong!. please try again"
-                    );
-                  }
-                  toast.success("You have been logged out");
-                })
-            }
+            onClick={handleClick}
             className="flex flex-1 font-bold bg-orange-500"
           >
             Log Out

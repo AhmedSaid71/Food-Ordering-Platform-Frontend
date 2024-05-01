@@ -13,17 +13,19 @@ import ImageSection from "./ImageSection";
 import { Button } from "@/components/ui/button";
 import LoadingButton from "@/components/shared/LoadingButton";
 import {
-  createRestaurant,
-  getRestaurantData,
+  getMyRestaurantInfo,
   getRestaurantStatus,
-  updateRestaurant,
 } from "@/store/restaurantSlice";
 
 import { MangeRestaurantValidator, TMangeRestaurantValidator } from "@/types";
+import {
+  updateMyRestaurant,
+  createMyRestaurant,
+} from "@/services/apiRestaurants";
 
 const MangeRestaurant = () => {
   const { loading } = useAppSelector(getRestaurantStatus);
-  const restaurant = useAppSelector(getRestaurantData);
+  const restaurant = useAppSelector(getMyRestaurantInfo);
   const dispatch = useAppDispatch();
   const isEditing = !!restaurant;
 
@@ -59,7 +61,6 @@ const MangeRestaurant = () => {
     form.reset(updatedRestaurant);
   }, [form, restaurant]);
 
-  console.log(restaurant?.cuisines);
   const onSubmit = (formDataJson: TMangeRestaurantValidator) => {
     const formData = new FormData();
 
@@ -90,7 +91,7 @@ const MangeRestaurant = () => {
       formData.append(`imageFile`, formDataJson.imageFile);
     }
     dispatch(
-      isEditing ? updateRestaurant(formData) : createRestaurant(formData)
+      isEditing ? updateMyRestaurant(formData) : createMyRestaurant(formData)
     )
       .unwrap()
       .then(({ message }) => {

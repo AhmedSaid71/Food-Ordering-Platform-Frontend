@@ -10,6 +10,9 @@ import Signup from "./forms/user/Signup";
 import ProfileForm from "./forms/user/ProfileForm";
 import LoadingButton from "./shared/LoadingButton";
 import MangeRestaurant from "./forms/restaurant/MangeRestaurant";
+import SearchBar from "./shared/SearchBar";
+import RestaurantCard from "./shared/RestaurantCard";
+import SearchResultInfo from "./shared/SearchResultInfo";
 
 export {
   Header,
@@ -24,4 +27,7 @@ export {
   ProfileForm,
   LoadingButton,
   MangeRestaurant,
+  SearchBar,
+  RestaurantCard,
+  SearchResultInfo,
 };

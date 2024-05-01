@@ -6,5 +6,16 @@ const Register = lazy(() => import("./Register"));
 const Profile = lazy(() => import("./Profile"));
 const ProtectedRoutes = lazy(() => import("./ProtectedRoutes"));
 const Restaurant = lazy(() => import("./Restaurant"));
+const Restaurants = lazy(() => import("./Restaurants"));
+const MyRestaurant = lazy(() => import("./MyRestaurant"));
 
-export { Home, Login, Register, Profile, ProtectedRoutes, Restaurant };
+export {
+  Home,
+  Login,
+  Register,
+  Profile,
+  ProtectedRoutes,
+  Restaurant,
+  Restaurants,
+  MyRestaurant,
+};

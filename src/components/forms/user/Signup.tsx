@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Link, useNavigate } from "react-router-dom";
 
 import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
-import { getAuthObj, signup } from "@/store/authSlice";
+import { getAuthObj } from "@/store/authSlice";
 
 import {
   SignupCredentialsValidator,
@@ -22,6 +22,7 @@ import { Input } from "../../ui/input";
 import { Button } from "../../ui/button";
 import LoadingButton from "../../shared/LoadingButton";
 import toast from "react-hot-toast";
+import { signup } from "@/services/apiAuth";
 
 const Signup = () => {
   const dispatch = useAppDispatch();

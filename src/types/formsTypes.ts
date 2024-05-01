@@ -87,3 +87,11 @@ export const MangeRestaurantValidator = z
 export type TMangeRestaurantValidator = z.infer<
   typeof MangeRestaurantValidator
 >;
+
+export const SearchBarValidator = z.object({
+  searchQuery: z.string({
+    required_error: "Restaurant name is required",
+  }),
+});
+
+export type TSearchBarValidator = z.infer<typeof SearchBarValidator>;

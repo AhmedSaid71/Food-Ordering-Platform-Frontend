@@ -20,7 +20,9 @@ const CuisineCheckbox = ({ cuisine, field }: ICuisineCheckbox) => {
           }}
         />
       </FormControl>
-      <FormLabel className="text-sm font-normal">{cuisine}</FormLabel>
+      <FormLabel className="text-sm font-normal capitalize">
+        {cuisine}
+      </FormLabel>
     </FormItem>
   );
 };

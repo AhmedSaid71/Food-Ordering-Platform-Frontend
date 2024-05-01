@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Link, useNavigate } from "react-router-dom";
 
 import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
-import { getAuthObj, login } from "@/store/authSlice";
+import { getAuthObj } from "@/store/authSlice";
 
 import { LoginCredentialsValidator, TLoginCredentialsValidator } from "@/types";
 
@@ -19,6 +19,7 @@ import {
 import { Input } from "../../ui/input";
 import { Button } from "../../ui/button";
 import toast from "react-hot-toast";
+import { login } from "@/services/apiAuth";
 
 const Login = () => {
   const navigate = useNavigate();

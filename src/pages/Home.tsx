@@ -1,13 +1,26 @@
 import { download, landing } from "@/assets";
+import { SearchBar } from "@/components";
+import { TSearchBarValidator } from "@/types";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
+
+  const handleSearchSubmit = (searchFormValues: TSearchBarValidator) => {
+    navigate(`/restaurants/${searchFormValues.searchQuery}`);
+  };
+
   return (
     <section className="flex flex-col gap-12">
-      <div className="bg-white rounded-lg shadow-md py-8 flex flex-col gap-5 text-center -mt-16 px-2">
+      <div className="md:px-32 bg-white rounded-lg shadow-md py-8 flex flex-col gap-5 text-center -mt-16 px-2">
         <h1 className=" text-4xl md:text-5xl font-bold tracking-tight text-orange-600">
           Tuck into a takway today
         </h1>
         <span>Food is just a click away!</span>
+        <SearchBar
+          placeholder="Search by City or Town"
+          onSubmit={handleSearchSubmit}
+        />
       </div>
       <div className="grid md:grid-cols-2 gap-5">
         <img src={landing} alt="landing image" />

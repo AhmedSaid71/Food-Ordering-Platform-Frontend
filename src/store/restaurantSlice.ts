@@ -1,106 +1,91 @@
-import { IRestaurantInitialState } from "@/types";
-import { api, axiosErrorHandler, isString } from "@/utils";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "./store";
-
-export const createRestaurant = createAsyncThunk(
-  "restaurant/createRestaurant",
-  async (data: FormData, thunkAPI) => {
-    const { rejectWithValue } = thunkAPI;
-    try {
-      const res = await api.post("/restaurant", data);
-      const restaurant = res.data.data.restaurant;
-      const message = res.data.message;
-      return { restaurant, message };
-    } catch (error) {
-      return rejectWithValue(axiosErrorHandler(error));
-    }
-  }
-);
-export const getRestaurant = createAsyncThunk(
-  "restaurant/getRestaurant",
-  async (_, thunkAPI) => {
-    const { rejectWithValue } = thunkAPI;
-    try {
-      const res = await api.get("/restaurant");
-      const restaurant = res.data.data.restaurant;
-      return restaurant;
-    } catch (error) {
-      return rejectWithValue(axiosErrorHandler(error));
-    }
-  }
-);
-export const updateRestaurant = createAsyncThunk(
-  "restaurant/updateRestaurant",
-  async (data: FormData, thunkAPI) => {
-    const { rejectWithValue } = thunkAPI;
-    try {
-      const res = await api.patch("/restaurant", data);
-      const restaurant = res.data.data.restaurant;
-      const message = res.data.message;
-      return { restaurant, message };
-    } catch (error) {
-      return rejectWithValue(axiosErrorHandler(error));
-    }
-  }
-);
+import { IRestaurantInitialState } from "@/types";
+import { isString } from "@/utils";
+import {
+  createMyRestaurant,
+  getAllRestaurants,
+  getMyRestaurant,
+  updateMyRestaurant,
+} from "@/services/apiRestaurants";
 
 const initialState: IRestaurantInitialState = {
   restaurant: null,
+  restaurants: [],
+  myRestaurant: null,
+  totalRestaurants: 0,
+  message: null,
   loading: false,
   error: null,
-  message: null,
-  isCreating: false,
 };
 
 const restaurantSlice = createSlice({
-  name: "restaurants",
+  name: "restaurant",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(createRestaurant.pending, (state) => {
+      //create my restaurant
+      .addCase(createMyRestaurant.pending, (state) => {
         state.loading = true;
         state.error = null;
-        state.isCreating = true;
       })
-      .addCase(createRestaurant.fulfilled, (state, action) => {
+      .addCase(createMyRestaurant.fulfilled, (state, action) => {
         state.loading = false;
-        state.restaurant = action.payload.restaurant;
+        state.myRestaurant = action.payload.restaurant;
         state.message = action.payload.message;
-        state.isCreating = false;
       })
-      .addCase(createRestaurant.rejected, (state, action) => {
-        state.loading = false;
-        state.isCreating = false;
-        if (isString(action.payload)) {
-          state.error = action.payload;
-        }
-      })
-      .addCase(getRestaurant.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(getRestaurant.fulfilled, (state, action) => {
-        state.loading = false;
-        state.restaurant = action.payload;
-      })
-      .addCase(getRestaurant.rejected, (state, action) => {
+      .addCase(createMyRestaurant.rejected, (state, action) => {
         state.loading = false;
         if (isString(action.payload)) {
           state.error = action.payload;
         }
       })
-      .addCase(updateRestaurant.pending, (state) => {
+
+      //get my restaurant
+      .addCase(getMyRestaurant.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(updateRestaurant.fulfilled, (state, action) => {
+      .addCase(getMyRestaurant.fulfilled, (state, action) => {
         state.loading = false;
-        state.restaurant = action.payload.restaurant;
+        state.myRestaurant = action.payload;
+      })
+      .addCase(getMyRestaurant.rejected, (state, action) => {
+        state.loading = false;
+        if (isString(action.payload)) {
+          state.error = action.payload;
+        }
+      })
+
+      //update my restaurant
+      .addCase(updateMyRestaurant.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateMyRestaurant.fulfilled, (state, action) => {
+        state.loading = false;
+        state.myRestaurant = action.payload.restaurant;
         state.message = action.payload.message;
       })
-      .addCase(updateRestaurant.rejected, (state, action) => {
+      .addCase(updateMyRestaurant.rejected, (state, action) => {
+        state.loading = false;
+        if (isString(action.payload)) {
+          state.error = action.payload;
+        }
+      })
+
+      //get All Restaurants
+      .addCase(getAllRestaurants.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getAllRestaurants.fulfilled, (state, action) => {
+        state.loading = false;
+        state.restaurants = action.payload.restaurants;
+        state.totalRestaurants = action.payload.results;
+      })
+      .addCase(getAllRestaurants.rejected, (state, action) => {
         state.loading = false;
         if (isString(action.payload)) {
           state.error = action.payload;
@@ -111,9 +96,22 @@ const restaurantSlice = createSlice({
 
 export default restaurantSlice.reducer;
 
-export const getRestaurantData = (state: RootState) =>
+export const getMyRestaurantInfo = (state: RootState) =>
+  state.restaurant.myRestaurant;
+export const getRestaurantInfo = (state: RootState) =>
   state.restaurant.restaurant;
-export const getRestaurantStatus = (state: RootState) => {
-  const { loading, error, isCreating } = state.restaurant;
-  return { loading, error, isCreating };
+export const getAllRestaurantsInfo = (state: RootState) =>
+  state.restaurant.restaurants;
+
+const loading = (state: RootState) => state.restaurant.loading;
+const error = (state: RootState) => state.restaurant.error;
+
+export const getRestaurantStatus = createSelector(
+  [loading, error],
+  (loading, error) => {
+    return { loading, error };
+  }
+);
+export const getTotalRestaurants = (state: RootState) => {
+  return state.restaurant.totalRestaurants;
 };

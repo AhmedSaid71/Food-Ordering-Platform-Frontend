@@ -26,6 +26,7 @@ const MenuItemInput = ({ index, removeMenuItem }: IMenuItemInput) => {
             <FormControl>
               <Input
                 {...field}
+                key={index}
                 placeholder="Cheese Pizza"
                 className="bg-white"
               />

@@ -1,4 +1,5 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
 
 import {
@@ -14,14 +15,25 @@ import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
 import { UserMenu } from "..";
 import { getUser } from "@/store/userSlice";
-import { logout, getAuthObj } from "@/store/authSlice";
-import toast from "react-hot-toast";
+import { getAuthObj } from "@/store/authSlice";
+import { logout } from "@/services/apiAuth";
 
 const Navbar = () => {
   const user = useAppSelector(getUser);
-  const { loading, error, isAuthenticated } = useAppSelector(getAuthObj);
+  const { loading, isAuthenticated } = useAppSelector(getAuthObj);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logout())
+      .unwrap()
+      .then((message) => {
+        toast.success(message);
+        navigate("/", { replace: true });
+      })
+      .catch((err) => toast.error(err));
+  };
+
   return (
     <nav>
       <div className="md:hidden flex items-center justify-center">
@@ -54,18 +66,7 @@ const Navbar = () => {
                   </NavLink>
                   <Button
                     className="flex items-center px-3 font-bold hover:bg-gray-500"
-                    onClick={() =>
-                      dispatch(logout())
-                        .unwrap()
-                        .then(() => {
-                          if (error) {
-                            return toast.error(
-                              "Something went wrong!. please try again"
-                            );
-                          }
-                          toast.success("You have been logged out");
-                        })
-                    }
+                    onClick={handleLogout}
                     disabled={loading}
                   >
                     Logout

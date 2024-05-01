@@ -20,9 +20,10 @@ import {
 import { Input } from "../../ui/input";
 import { Button } from "../../ui/button";
 import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
-import { getUser, getUserStatus, updateUser } from "@/store/userSlice";
+import { getUser, getUserStatus } from "@/store/userSlice";
 import toast from "react-hot-toast";
 import { useEffect } from "react";
+import { updateUser } from "@/services/apiUser";
 
 const ProfileForm = () => {
   const dispatch = useAppDispatch();

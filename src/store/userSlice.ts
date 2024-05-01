@@ -1,37 +1,9 @@
-import { IUpdateUserRequest, IUserInitialState } from "@/types";
-import { api, axiosErrorHandler, isString } from "@/utils";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { updateIsAuthenticatedState } from "./authSlice";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "./store";
 
-export const getUserData = createAsyncThunk(
-  "user/getUserData",
-  async (_, thunkAPI) => {
-    const { rejectWithValue, dispatch } = thunkAPI;
-    try {
-      const res = await api.get("/user/me");
-      dispatch(updateIsAuthenticatedState(true));
-      return res.data;
-    } catch (error) {
-      return rejectWithValue(axiosErrorHandler(error));
-    }
-  }
-);
-
-export const updateUser = createAsyncThunk(
-  "user/updateUser",
-  async (data: IUpdateUserRequest, thunkAPI) => {
-    const { rejectWithValue } = thunkAPI;
-    try {
-      const res = await api.patch("/user/updateMe", data);
-      const message = res.data.message;
-      const user = res.data.data.user;
-      return { user, message };
-    } catch (error) {
-      return rejectWithValue(axiosErrorHandler(error));
-    }
-  }
-);
+import { IUserInitialState } from "@/types";
+import { isString } from "@/utils";
+import { getUserData, updateUser } from "@/services/apiUser";
 
 const initialState: IUserInitialState = {
   user: null,
@@ -87,7 +59,13 @@ export default userSlice.reducer;
 export const { setUser } = userSlice.actions;
 
 export const getUser = (state: RootState) => state.user.user;
-export const getUserStatus = (state: RootState) => {
-  const { loading, error } = state.user;
-  return { loading, error };
-};
+
+const loading = (state: RootState) => state.user.loading;
+const error = (state: RootState) => state.user.error;
+
+export const getUserStatus = createSelector(
+  [loading, error],
+  (loading, error) => {
+    return { loading, error };
+  }
+);

@@ -7,7 +7,7 @@ interface IMenuItem {
 interface IRestaurant {
   _id: string;
   user: string;
-  restaurantName: string;
+  name: string;
   city: string;
   country: string;
   deliveryPrice: number;
@@ -20,10 +20,25 @@ interface IRestaurant {
 
 interface IRestaurantInitialState {
   restaurant: IRestaurant | null;
+  restaurants: IRestaurant[] | [];
+  myRestaurant: IRestaurant | null;
   loading: boolean;
   error: string | null;
   message: string | null;
-  isCreating: boolean;
+  totalRestaurants: number;
 }
 
-export type { IMenuItem, IRestaurant, IRestaurantInitialState };
+interface IRestaurantsInitialState {
+  restaurants: IRestaurant[] | [];
+  results: null | number;
+  page: number | null;
+  loading: boolean;
+  error: string | null;
+}
+
+export type {
+  IMenuItem,
+  IRestaurant,
+  IRestaurantInitialState,
+  IRestaurantsInitialState,
+};
