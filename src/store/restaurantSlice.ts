@@ -13,10 +13,12 @@ const initialState: IRestaurantInitialState = {
   restaurant: null,
   restaurants: [],
   myRestaurant: null,
-  totalRestaurants: 0,
   message: null,
   loading: false,
   error: null,
+  total: 0,
+  page: 0,
+  pages: 0,
 };
 
 const restaurantSlice = createSlice({
@@ -83,7 +85,9 @@ const restaurantSlice = createSlice({
       .addCase(getAllRestaurants.fulfilled, (state, action) => {
         state.loading = false;
         state.restaurants = action.payload.restaurants;
-        state.totalRestaurants = action.payload.results;
+        state.total = action.payload.total;
+        state.page = action.payload.page;
+        state.pages = action.payload.pages;
       })
       .addCase(getAllRestaurants.rejected, (state, action) => {
         state.loading = false;
@@ -96,6 +100,12 @@ const restaurantSlice = createSlice({
 
 export default restaurantSlice.reducer;
 
+const loading = (state: RootState) => state.restaurant.loading;
+const error = (state: RootState) => state.restaurant.error;
+const total = (state: RootState) => state.restaurant.total;
+const page = (state: RootState) => state.restaurant.page;
+const pages = (state: RootState) => state.restaurant.pages;
+
 export const getMyRestaurantInfo = (state: RootState) =>
   state.restaurant.myRestaurant;
 export const getRestaurantInfo = (state: RootState) =>
@@ -103,15 +113,20 @@ export const getRestaurantInfo = (state: RootState) =>
 export const getAllRestaurantsInfo = (state: RootState) =>
   state.restaurant.restaurants;
 
-const loading = (state: RootState) => state.restaurant.loading;
-const error = (state: RootState) => state.restaurant.error;
-
 export const getRestaurantStatus = createSelector(
   [loading, error],
   (loading, error) => {
     return { loading, error };
   }
 );
-export const getTotalRestaurants = (state: RootState) => {
-  return state.restaurant.totalRestaurants;
-};
+
+export const getPagination = createSelector(
+  [page, pages, total],
+  (page, pages, total) => {
+    return {
+      page,
+      pages,
+      total,
+    };
+  }
+);

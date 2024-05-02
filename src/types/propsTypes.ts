@@ -33,6 +33,11 @@ interface ISearchResultInfo {
   total: number;
   city: string;
 }
+interface IPaginationSelector {
+  page: number;
+  pages: number;
+  onPageChange: (page: number) => void;
+}
 export type {
   IAuthOProviderWithNavigate,
   ILoadingButton,
@@ -41,4 +46,5 @@ export type {
   ISearchBar,
   IRestaurantCard,
   ISearchResultInfo,
+  IPaginationSelector,
 };

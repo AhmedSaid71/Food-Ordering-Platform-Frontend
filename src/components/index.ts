@@ -13,6 +13,7 @@ import MangeRestaurant from "./forms/restaurant/MangeRestaurant";
 import SearchBar from "./shared/SearchBar";
 import RestaurantCard from "./shared/RestaurantCard";
 import SearchResultInfo from "./shared/SearchResultInfo";
+import PaginationSelector from "./shared/PaginationSelector";
 
 export {
   Header,
@@ -30,4 +31,5 @@ export {
   SearchBar,
   RestaurantCard,
   SearchResultInfo,
+  PaginationSelector,
 };

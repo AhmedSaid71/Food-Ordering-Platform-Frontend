@@ -25,7 +25,9 @@ interface IRestaurantInitialState {
   loading: boolean;
   error: string | null;
   message: string | null;
-  totalRestaurants: number;
+  total: number;
+  page: number;
+  pages: number;
 }
 
 interface IRestaurantsInitialState {

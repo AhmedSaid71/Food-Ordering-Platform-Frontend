@@ -52,7 +52,7 @@ export type TSearchState = {
 };
 interface IGetAllResultsHandler {
   city?: string;
-  searchState?: TSearchState;
+  searchState: TSearchState;
 }
 export const getAllRestaurants = createAsyncThunk(
   "restaurants/getAllRestaurants",
@@ -60,13 +60,16 @@ export const getAllRestaurants = createAsyncThunk(
     const { rejectWithValue } = thunkAPI;
     const params = new URLSearchParams();
     params.set("searchQuery", data?.searchState?.searchQuery as string);
+    params.set("page", data?.searchState?.page?.toString() as string);
     try {
       const res = await api.get(
         `/restaurants/${data.city}?${params.toString()}`
       );
-      const results = res.data.results;
+      const total = res.data.total;
+      const page = res.data.page;
+      const pages = res.data.pages;
       const restaurants = res.data.data.restaurants;
-      return { results, restaurants };
+      return { restaurants, total, page, pages };
     } catch (error) {
       return rejectWithValue(axiosErrorHandler(error));
     }
