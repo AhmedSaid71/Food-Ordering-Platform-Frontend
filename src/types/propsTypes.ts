@@ -38,6 +38,12 @@ interface IPaginationSelector {
   pages: number;
   onPageChange: (page: number) => void;
 }
+interface ICuisineFilter {
+  selectedCuisines: string[];
+  isExpanded: boolean;
+  onChange: (cuisines: string[]) => void;
+  onExpand: () => void;
+}
 export type {
   IAuthOProviderWithNavigate,
   ILoadingButton,
@@ -47,4 +53,5 @@ export type {
   IRestaurantCard,
   ISearchResultInfo,
   IPaginationSelector,
+  ICuisineFilter,
 };

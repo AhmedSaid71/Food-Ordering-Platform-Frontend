@@ -1,4 +1,7 @@
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import {
+  CuisineFilter,
   PaginationSelector,
   RestaurantCard,
   SearchBar,
@@ -13,18 +16,35 @@ import {
   getRestaurantStatus,
 } from "@/store/restaurantSlice";
 import { TSearchBarValidator } from "@/types";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 
+export type SearchState = {
+  searchQuery: string;
+  page: number;
+  selectedCuisines: string[];
+  // sortOption: string;
+};
 const Restaurants = () => {
   const dispatch = useAppDispatch();
-  const [searchState, setSearchState] = useState({ searchQuery: "", page: 1 });
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [searchState, setSearchState] = useState<SearchState>({
+    searchQuery: "",
+    page: 1,
+    selectedCuisines: [],
+  });
 
   const { page, pages, total } = useAppSelector(getPagination);
   const restaurants = useAppSelector(getAllRestaurantsInfo);
   const { loading } = useAppSelector(getRestaurantStatus);
   const { city } = useParams();
 
+  const setSelectedCuisines = (selectedCuisines: string[]) => {
+    setSearchState((prev) => ({
+      ...prev,
+      selectedCuisines,
+      page: 1,
+    }));
+  };
+  
   const setSearchQuery = async (query: TSearchBarValidator) => {
     setSearchState((prev) => ({ ...prev, searchQuery: query.searchQuery }));
   };
@@ -49,14 +69,12 @@ const Restaurants = () => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-[250px_1fr] gap-5">
       <div id="cuisines-list">
-        {/* <CuisineFilter
+        <CuisineFilter
           selectedCuisines={searchState.selectedCuisines}
           onChange={setSelectedCuisines}
           isExpanded={isExpanded}
-          onExpandedClick={() =>
-            setIsExpanded((prevIsExpanded) => !prevIsExpanded)
-          }
-        /> */}
+          onExpand={() => setIsExpanded((prevIsExpanded) => !prevIsExpanded)}
+        />
       </div>
       <div id="main-content" className="flex flex-col gap-5">
         <SearchBar

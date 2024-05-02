@@ -45,9 +45,9 @@ export const updateMyRestaurant = createAsyncThunk(
   }
 );
 export type TSearchState = {
-  searchQuery?: string;
-  page?: number;
-  selectedCuisines?: string[];
+  searchQuery: string;
+  page: number;
+  selectedCuisines: string[];
   sortOption?: string;
 };
 interface IGetAllResultsHandler {
@@ -59,8 +59,10 @@ export const getAllRestaurants = createAsyncThunk(
   async (data: IGetAllResultsHandler, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     const params = new URLSearchParams();
-    params.set("searchQuery", data?.searchState?.searchQuery as string);
-    params.set("page", data?.searchState?.page?.toString() as string);
+    params.set("searchQuery", data.searchState.searchQuery);
+    params.set("page", data.searchState.page.toString());
+    params.set("selectedCuisines", data.searchState.selectedCuisines.join(","));
+    // params.set("sortOption", data?.searchState?.sortOption);
     try {
       const res = await api.get(
         `/restaurants/${data.city}?${params.toString()}`
