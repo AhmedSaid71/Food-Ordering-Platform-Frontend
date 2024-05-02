@@ -9,11 +9,18 @@ import Login from "./forms/user/Login";
 import Signup from "./forms/user/Signup";
 import ProfileForm from "./forms/user/ProfileForm";
 import LoadingButton from "./shared/LoadingButton";
-import MangeRestaurant from "./forms/restaurant/MangeRestaurant";
 import SearchBar from "./shared/SearchBar";
 import RestaurantCard from "./shared/RestaurantCard";
 import SearchResultInfo from "./shared/SearchResultInfo";
 import PaginationSelector from "./shared/PaginationSelector";
+import CuisineFilter from "./shared/CuisineFilter";
+import MangeRestaurant from "./forms/restaurant/MangeRestaurant";
+import CuisineCheckbox from "./forms/restaurant/CuisineCheckbox";
+import CuisinesSection from "./forms/restaurant/CuisinesSection";
+import DetailsSection from "./forms/restaurant/DetailsSection";
+import ImageSection from "./forms/restaurant/ImageSection";
+import MenuItemInput from "./forms/restaurant/MenuItemInput";
+import MenuSection from "./forms/restaurant/MenuSection";
 
 export {
   Header,
@@ -32,4 +39,11 @@ export {
   RestaurantCard,
   SearchResultInfo,
   PaginationSelector,
+  CuisineFilter,
+  CuisineCheckbox,
+  CuisinesSection,
+  ImageSection,
+  DetailsSection,
+  MenuItemInput,
+  MenuSection,
 };
