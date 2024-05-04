@@ -3,25 +3,22 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import toast from "react-hot-toast";
 
-import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
-import { Form } from "@/components/ui/form";
-import { Separator } from "@/components/ui/separator";
-import DetailsSection from "./DetailsSection";
-import CuisinesSection from "./CuisinesSection";
-import MenuSection from "./MenuSection";
-import ImageSection from "./ImageSection";
-import { Button } from "@/components/ui/button";
-import LoadingButton from "@/components/shared/LoadingButton";
+import { useAppDispatch, useAppSelector } from "@/hooks";
+import { getMyRestaurantInfo, getRestaurantStatus } from "@/store";
+
 import {
-  getMyRestaurantInfo,
-  getRestaurantStatus,
-} from "@/store/restaurantSlice";
+  Form,
+  Separator,
+  DetailsSection,
+  CuisinesSection,
+  MenuSection,
+  ImageSection,
+  Button,
+  LoadingButton,
+} from "@/components";
 
 import { MangeRestaurantValidator, TMangeRestaurantValidator } from "@/types";
-import {
-  updateMyRestaurant,
-  createMyRestaurant,
-} from "@/services/apiRestaurants";
+import { updateMyRestaurant, createMyRestaurant } from "@/services";
 
 const MangeRestaurant = () => {
   const { loading } = useAppSelector(getRestaurantStatus);
@@ -96,7 +93,6 @@ const MangeRestaurant = () => {
       .unwrap()
       .then(({ message }) => {
         toast.success(message);
-        // window.location.reload();
       })
       .catch((error) => {
         toast.error(error);

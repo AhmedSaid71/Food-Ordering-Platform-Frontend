@@ -1,4 +1,4 @@
-import { TSearchState } from "@/types";
+import { IGetAllResultsHandler, TSearchState } from "@/types";
 import { api, axiosErrorHandler } from "@/utils";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
@@ -46,10 +46,6 @@ export const updateMyRestaurant = createAsyncThunk(
   }
 );
 
-interface IGetAllResultsHandler {
-  city?: string;
-  searchState: TSearchState;
-}
 export const getAllRestaurants = createAsyncThunk(
   "restaurants/getAllRestaurants",
   async (data: IGetAllResultsHandler, thunkAPI) => {
@@ -68,6 +64,20 @@ export const getAllRestaurants = createAsyncThunk(
       const pages = res.data.pages;
       const restaurants = res.data.data.restaurants;
       return { restaurants, total, page, pages };
+    } catch (error) {
+      return rejectWithValue(axiosErrorHandler(error));
+    }
+  }
+);
+
+export const getRestaurant = createAsyncThunk(
+  "restaurants/getRestaurant",
+  async (id: string, thunkAPI) => {
+    const { rejectWithValue } = thunkAPI;
+    try {
+      const res = await api.get(`/restaurants/details/${id}`);
+      const restaurant = res.data.data.restaurant;
+      return restaurant;
     } catch (error) {
       return rejectWithValue(axiosErrorHandler(error));
     }

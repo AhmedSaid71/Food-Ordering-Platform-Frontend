@@ -1,3 +1,5 @@
+import { TSearchState } from "./sharedTypes";
+
 export interface ILoginUserRequest {
   email: string;
   password: string;
@@ -13,4 +15,9 @@ export interface IUpdateUserRequest {
   addressLine1: string;
   country: string;
   city: string;
+}
+
+export interface IGetAllResultsHandler {
+  city?: string;
+  searchState: TSearchState;
 }

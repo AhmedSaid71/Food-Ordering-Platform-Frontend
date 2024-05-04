@@ -1,6 +1,10 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
+
+import { useAppDispatch, useAppSelector } from "@/hooks";
+import { getUser, getAuthObj } from "@/store";
+import { logout } from "@/services";
+import { CircleUserRound, Menu } from "lucide-react";
 
 import {
   Sheet,
@@ -8,15 +12,10 @@ import {
   SheetDescription,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet";
-
-import { CircleUserRound, Menu } from "lucide-react";
-import { Button } from "../ui/button";
-import { Separator } from "../ui/separator";
-import { UserMenu } from "..";
-import { getUser } from "@/store/userSlice";
-import { getAuthObj } from "@/store/authSlice";
-import { logout } from "@/services/apiAuth";
+  Button,
+  Separator,
+  UserMenu,
+} from "@/components";
 
 const Navbar = () => {
   const user = useAppSelector(getUser);

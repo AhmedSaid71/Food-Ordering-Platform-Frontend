@@ -1,11 +1,12 @@
 import { Suspense, useEffect, useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Provider } from "react-redux";
 import { Toaster } from "react-hot-toast";
 
-import { Spinner } from "./components";
+import { getUserData } from "./services";
 import Layout from "./layouts/layout";
 import HomeLayout from "./layouts/HomeLayout";
-
+import store from "./store/store";
 import {
   Login,
   MyRestaurant,
@@ -15,11 +16,8 @@ import {
   Restaurant,
   Restaurants,
 } from "./pages";
-import Test from "./pages/Test";
-import store from "./store/store";
-import { Provider } from "react-redux";
-import { getUserData } from "./services/apiUser";
 
+import { Spinner } from "./components";
 const router = createBrowserRouter([
   {
     index: true,
@@ -48,7 +46,6 @@ const router = createBrowserRouter([
       { path: "/register", element: <Register /> },
       { path: "/restaurant/:id", element: <Restaurant /> },
       { path: "/restaurants/:city", element: <Restaurants /> },
-      { path: "/test", element: <Test /> },
       { path: "*", element: <div>Page not found</div> },
     ],
   },

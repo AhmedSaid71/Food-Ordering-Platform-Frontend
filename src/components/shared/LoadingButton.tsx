@@ -1,5 +1,5 @@
 import { ILoadingButton } from "@/types";
-import { Button } from "../ui/button";
+import { Button } from "@/components";
 import { Loader2 } from "lucide-react";
 
 const LoadingButton = ({ title }: ILoadingButton) => {

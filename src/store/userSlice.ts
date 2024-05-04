@@ -3,7 +3,7 @@ import { RootState } from "./store";
 
 import { IUserInitialState } from "@/types";
 import { isString } from "@/utils";
-import { getUserData, updateUser } from "@/services/apiUser";
+import { getUserData, updateUser } from "@/services";
 
 const initialState: IUserInitialState = {
   user: null,

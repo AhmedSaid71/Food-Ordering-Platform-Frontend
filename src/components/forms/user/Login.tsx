@@ -1,13 +1,13 @@
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
-import { getAuthObj } from "@/store/authSlice";
-
+import { login } from "@/services";
+import { getAuthObj } from "@/store";
+import { useAppDispatch, useAppSelector } from "@/hooks";
 import { LoginCredentialsValidator, TLoginCredentialsValidator } from "@/types";
 
-import LoadingButton from "../../shared/LoadingButton";
 import {
   Form,
   FormControl,
@@ -15,11 +15,11 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "../../ui/input";
-import { Button } from "../../ui/button";
-import toast from "react-hot-toast";
-import { login } from "@/services/apiAuth";
+  Input,
+  Button,
+  LoadingButton,
+} from "@/components";
+
 
 const Login = () => {
   const navigate = useNavigate();

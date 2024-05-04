@@ -1,5 +1,15 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router-dom"
+;
+import { useAppDispatch, useAppSelector } from "@/hooks";
+import { getAllRestaurants } from "@/services";
+import {
+  getAllRestaurantsInfo,
+  getPagination,
+  getRestaurantStatus,
+} from "@/store";
+import { TSearchBarValidator, TSearchState } from "@/types";
+
 import {
   CuisineFilter,
   PaginationSelector,
@@ -9,14 +19,6 @@ import {
   SortBy,
   Spinner,
 } from "@/components";
-import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
-import { getAllRestaurants } from "@/services/apiRestaurants";
-import {
-  getAllRestaurantsInfo,
-  getPagination,
-  getRestaurantStatus,
-} from "@/store/restaurantSlice";
-import { TSearchBarValidator, TSearchState } from "@/types";
 
 const Restaurants = () => {
   const dispatch = useAppDispatch();

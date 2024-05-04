@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { Navbar } from "..";
+import { Navbar } from "@/components";
 function Header() {
   return (
     <header className="border-b-2 border-b-orange-500 py-6">

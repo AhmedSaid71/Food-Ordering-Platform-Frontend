@@ -1,10 +1,17 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormControl, FormField, FormItem } from "../ui/form";
-import { Search } from "lucide-react";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
+
 import { ISearchBar, SearchBarValidator, TSearchBarValidator } from "@/types";
+import { Search } from "lucide-react";
+
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  Input,
+  Button,
+} from "@/components";
 
 const SearchBar = ({
   placeholder,

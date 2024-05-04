@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { isString } from "@/utils";
-import { RootState } from "./store";
+import { RootState } from "@/store";
 import { IAuthInitialState } from "@/types";
-import { login, logout, signup } from "@/services/apiAuth";
+import { login, logout, signup } from "@/services";
 
 const initialState: IAuthInitialState = {
   loading: false,

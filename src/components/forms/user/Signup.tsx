@@ -1,10 +1,11 @@
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
-import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
-import { getAuthObj } from "@/store/authSlice";
-
+import { getAuthObj } from "@/store";
+import { signup } from "@/services";
+import { useAppDispatch, useAppSelector } from "@/hooks";
 import {
   SignupCredentialsValidator,
   TSignupCredentialsValidator,
@@ -17,12 +18,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "../../ui/input";
-import { Button } from "../../ui/button";
-import LoadingButton from "../../shared/LoadingButton";
-import toast from "react-hot-toast";
-import { signup } from "@/services/apiAuth";
+  Input,
+  Button,
+  LoadingButton,
+} from "@/components";
 
 const Signup = () => {
   const dispatch = useAppDispatch();

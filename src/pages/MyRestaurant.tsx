@@ -1,7 +1,7 @@
-import { MangeRestaurant, Spinner } from "@/components";
-import { useAppDispatch } from "@/hooks/useReduxHooks";
-import { getMyRestaurant } from "@/services/apiRestaurants";
 import { useEffect, useState } from "react";
+import { MangeRestaurant, Spinner } from "@/components";
+import { useAppDispatch } from "@/hooks";
+import { getMyRestaurant } from "@/services";
 
 const MyRestaurant = () => {
   const [isLoading, setIsLoading] = useState(false);

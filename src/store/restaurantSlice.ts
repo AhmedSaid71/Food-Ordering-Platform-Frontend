@@ -1,13 +1,14 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
-import { RootState } from "./store";
+import { RootState } from "@/store";
 import { IRestaurantInitialState } from "@/types";
 import { isString } from "@/utils";
 import {
   createMyRestaurant,
   getAllRestaurants,
   getMyRestaurant,
+  getRestaurant,
   updateMyRestaurant,
-} from "@/services/apiRestaurants";
+} from "@/services";
 
 const initialState: IRestaurantInitialState = {
   restaurant: null,
@@ -90,6 +91,22 @@ const restaurantSlice = createSlice({
         state.pages = action.payload.pages;
       })
       .addCase(getAllRestaurants.rejected, (state, action) => {
+        state.loading = false;
+        if (isString(action.payload)) {
+          state.error = action.payload;
+        }
+      })
+
+      //get Restaurant
+      .addCase(getRestaurant.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getRestaurant.fulfilled, (state, action) => {
+        state.loading = false;
+        state.restaurant = action.payload;
+      })
+      .addCase(getRestaurant.rejected, (state, action) => {
         state.loading = false;
         if (isString(action.payload)) {
           state.error = action.payload;

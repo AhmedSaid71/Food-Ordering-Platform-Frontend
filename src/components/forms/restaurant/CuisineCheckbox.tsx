@@ -1,5 +1,4 @@
-import { Checkbox } from "@/components/ui/checkbox";
-import { FormControl, FormItem, FormLabel } from "@/components/ui/form";
+import { FormControl, FormItem, FormLabel, Checkbox } from "@/components";
 import { ICuisineCheckbox } from "@/types";
 
 const CuisineCheckbox = ({ cuisine, field }: ICuisineCheckbox) => {

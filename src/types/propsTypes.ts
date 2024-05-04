@@ -49,6 +49,9 @@ interface ISortBy {
   sortOption: string;
 }
 
+interface IRestaurantInfo {
+  restaurant: IRestaurant;
+}
 export type {
   IAuthOProviderWithNavigate,
   ILoadingButton,
@@ -60,4 +63,5 @@ export type {
   IPaginationSelector,
   ICuisineFilter,
   ISortBy,
+  IRestaurantInfo,
 };

@@ -1,10 +1,10 @@
-import { Button } from "../ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
+  Button,
+} from "@/components";
 import { sortOptions } from "@/constants";
 import { ISortBy } from "@/types";
 

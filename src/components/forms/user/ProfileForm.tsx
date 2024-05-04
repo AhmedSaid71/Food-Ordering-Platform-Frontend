@@ -1,13 +1,17 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import toast from "react-hot-toast";
 
+import { getUser, getUserStatus } from "@/store";
+import { useAppDispatch, useAppSelector } from "@/hooks";
+import { updateUser } from "@/services";
 import {
   IUser,
   TUpdateProfileValidator,
   UpdateProfileValidator,
 } from "@/types";
 
-import LoadingButton from "../../shared/LoadingButton";
 import {
   Form,
   FormControl,
@@ -16,14 +20,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../../ui/form";
-import { Input } from "../../ui/input";
-import { Button } from "../../ui/button";
-import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
-import { getUser, getUserStatus } from "@/store/userSlice";
-import toast from "react-hot-toast";
-import { useEffect } from "react";
-import { updateUser } from "@/services/apiUser";
+  LoadingButton,
+  Input,
+  Button,
+} from "@/components";
 
 const ProfileForm = () => {
   const dispatch = useAppDispatch();

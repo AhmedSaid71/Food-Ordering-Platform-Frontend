@@ -1,14 +1,14 @@
-import { Button } from "@/components/ui/button";
+import { useFormContext } from "react-hook-form";
+import { IMenuItemInput } from "@/types";
 import {
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { IMenuItemInput } from "@/types";
-import { useFormContext } from "react-hook-form";
+  Button,
+  Input,
+} from "@/components";
 
 const MenuItemInput = ({ index, removeMenuItem }: IMenuItemInput) => {
   const { control } = useFormContext();

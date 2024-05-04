@@ -1,17 +1,19 @@
+import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+
+import { useAppDispatch, useAppSelector } from "@/hooks";
+import { getUser } from "@/store";
+import { logout } from "@/services";
 import { CircleUserRound } from "lucide-react";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
-import { Link, useNavigate } from "react-router-dom";
-import { Separator } from "../ui/separator";
-import { Button } from "../ui/button";
-import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
-import { getUser } from "@/store/userSlice";
-import { logout } from "@/services/apiAuth";
+  Separator,
+  Button,
+} from "@/components";
 
 const UserMenu = () => {
   const navigate = useNavigate();

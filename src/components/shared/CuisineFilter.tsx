@@ -1,9 +1,8 @@
+import { ChangeEvent } from "react";
 import { cuisineList } from "@/constants";
 import { ICuisineFilter } from "@/types";
-import { Label } from "../ui/label";
 import { Check, ChevronDown, ChevronUp } from "lucide-react";
-import { Button } from "../ui/button";
-import { ChangeEvent } from "react";
+import { Label, Button } from "@/components";
 
 const CuisineFilter = ({
   onChange,

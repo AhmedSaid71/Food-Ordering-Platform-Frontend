@@ -1,12 +1,12 @@
+import { useFormContext } from "react-hook-form";
+import { cuisineList } from "@/constants";
 import {
+  CuisineCheckbox,
   FormDescription,
   FormField,
   FormItem,
   FormMessage,
-} from "@/components/ui/form";
-import { useFormContext } from "react-hook-form";
-import CuisineCheckbox from "./CuisineCheckbox";
-import { cuisineList } from "@/constants";
+} from "@/components";
 
 const CuisinesSection = () => {
   const { control } = useFormContext();
