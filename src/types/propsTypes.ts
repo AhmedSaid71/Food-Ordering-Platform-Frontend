@@ -44,6 +44,11 @@ interface ICuisineFilter {
   onChange: (cuisines: string[]) => void;
   onExpand: () => void;
 }
+interface ISortBy {
+  onChange: (value: string) => void;
+  sortOption: string;
+}
+
 export type {
   IAuthOProviderWithNavigate,
   ILoadingButton,
@@ -54,4 +59,5 @@ export type {
   ISearchResultInfo,
   IPaginationSelector,
   ICuisineFilter,
+  ISortBy,
 };

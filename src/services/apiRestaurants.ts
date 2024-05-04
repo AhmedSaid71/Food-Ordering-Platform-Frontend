@@ -1,3 +1,4 @@
+import { TSearchState } from "@/types";
 import { api, axiosErrorHandler } from "@/utils";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
@@ -44,12 +45,7 @@ export const updateMyRestaurant = createAsyncThunk(
     }
   }
 );
-export type TSearchState = {
-  searchQuery: string;
-  page: number;
-  selectedCuisines: string[];
-  sortOption?: string;
-};
+
 interface IGetAllResultsHandler {
   city?: string;
   searchState: TSearchState;
@@ -62,7 +58,7 @@ export const getAllRestaurants = createAsyncThunk(
     params.set("searchQuery", data.searchState.searchQuery);
     params.set("page", data.searchState.page.toString());
     params.set("selectedCuisines", data.searchState.selectedCuisines.join(","));
-    // params.set("sortOption", data?.searchState?.sortOption);
+    params.set("sortOption", data.searchState.sortOption);
     try {
       const res = await api.get(
         `/restaurants/${data.city}?${params.toString()}`

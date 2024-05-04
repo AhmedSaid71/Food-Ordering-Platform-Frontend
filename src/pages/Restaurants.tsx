@@ -6,6 +6,7 @@ import {
   RestaurantCard,
   SearchBar,
   SearchResultInfo,
+  SortBy,
   Spinner,
 } from "@/components";
 import { useAppDispatch, useAppSelector } from "@/hooks/useReduxHooks";
@@ -15,21 +16,16 @@ import {
   getPagination,
   getRestaurantStatus,
 } from "@/store/restaurantSlice";
-import { TSearchBarValidator } from "@/types";
+import { TSearchBarValidator, TSearchState } from "@/types";
 
-export type SearchState = {
-  searchQuery: string;
-  page: number;
-  selectedCuisines: string[];
-  // sortOption: string;
-};
 const Restaurants = () => {
   const dispatch = useAppDispatch();
   const [isExpanded, setIsExpanded] = useState(false);
-  const [searchState, setSearchState] = useState<SearchState>({
+  const [searchState, setSearchState] = useState<TSearchState>({
     searchQuery: "",
     page: 1,
     selectedCuisines: [],
+    sortOption: "bestMatch",
   });
 
   const { page, pages, total } = useAppSelector(getPagination);
@@ -44,7 +40,7 @@ const Restaurants = () => {
       page: 1,
     }));
   };
-  
+
   const setSearchQuery = async (query: TSearchBarValidator) => {
     setSearchState((prev) => ({ ...prev, searchQuery: query.searchQuery }));
   };
@@ -58,12 +54,19 @@ const Restaurants = () => {
   }, [dispatch, city, searchState]);
 
   const resetSearch = () => {
-    setSearchState((prevState) => ({
-      ...prevState,
+    setSearchState((prev) => ({
+      ...prev,
       searchQuery: "",
     }));
   };
 
+  const setSortOption = (sortOption: string) => {
+    setSearchState((prev) => ({
+      ...prev,
+      sortOption,
+      page: 1,
+    }));
+  };
   if (!restaurants) return <span>there are no results</span>;
 
   return (
@@ -85,11 +88,11 @@ const Restaurants = () => {
         />
         <div className="flex justify-between flex-col gap-3 lg:flex-row">
           <SearchResultInfo total={total} city={city as string} />
-          {/* 
-          <SortOptionDropdown
+
+          <SortBy
             sortOption={searchState.sortOption}
             onChange={(value) => setSortOption(value)}
-          /> */}
+          />
         </div>
 
         {loading ? (

@@ -21,6 +21,7 @@ import DetailsSection from "./forms/restaurant/DetailsSection";
 import ImageSection from "./forms/restaurant/ImageSection";
 import MenuItemInput from "./forms/restaurant/MenuItemInput";
 import MenuSection from "./forms/restaurant/MenuSection";
+import SortBy from "./shared/SortBy";
 
 export {
   Header,
@@ -46,4 +47,5 @@ export {
   DetailsSection,
   MenuItemInput,
   MenuSection,
+  SortBy,
 };
