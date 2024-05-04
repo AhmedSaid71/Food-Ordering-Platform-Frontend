@@ -86,23 +86,30 @@ const Restaurants = () => {
           placeholder="Search by Cuisine or Restaurant Name"
           onReset={resetSearch}
         />
-        <div className="flex justify-between flex-col gap-3 lg:flex-row">
-          <SearchResultInfo total={total} city={city as string} />
-
-          <SortBy
-            sortOption={searchState.sortOption}
-            onChange={(value) => setSortOption(value)}
-          />
-        </div>
-
         {loading ? (
           <Spinner />
         ) : (
-          restaurants.map((restaurant, i) => (
-            <RestaurantCard restaurant={restaurant} key={restaurant._id || i} />
-          ))
+          <>
+            <div className="flex justify-between flex-col gap-3 lg:flex-row">
+              <SearchResultInfo total={total} city={city as string} />
+              <SortBy
+                sortOption={searchState.sortOption}
+                onChange={(value) => setSortOption(value)}
+              />
+            </div>
+            {restaurants.map((restaurant, i) => (
+              <RestaurantCard
+                restaurant={restaurant}
+                key={restaurant._id || i}
+              />
+            ))}
+            <PaginationSelector
+              page={page}
+              pages={pages}
+              onPageChange={setPage}
+            />
+          </>
         )}
-        <PaginationSelector page={page} pages={pages} onPageChange={setPage} />
       </div>
     </div>
   );
