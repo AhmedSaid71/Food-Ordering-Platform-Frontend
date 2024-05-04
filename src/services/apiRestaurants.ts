@@ -1,4 +1,4 @@
-import { IGetAllResultsHandler, TSearchState } from "@/types";
+import { IGetAllResultsHandler } from "@/types";
 import { api, axiosErrorHandler } from "@/utils";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
