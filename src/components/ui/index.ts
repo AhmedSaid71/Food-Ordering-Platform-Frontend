@@ -72,7 +72,7 @@ import {
   SheetTitle,
   SheetDescription,
 } from "./sheet";
-
+import { Badge, badgeVariants } from "./badge";
 export {
   AspectRatio,
   Button,
@@ -137,4 +137,6 @@ export {
   SheetTitle,
   SheetDescription,
   Separator,
+  Badge,
+  badgeVariants,
 };

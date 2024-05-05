@@ -1,7 +1,11 @@
 import { ReactNode } from "react";
 import { ControllerRenderProps, FieldValues } from "react-hook-form";
-import { TSearchBarValidator } from "./formsTypes";
-import { IRestaurant } from "./restaurantTypes";
+import {
+  TSearchBarValidator,
+  IMenuItem,
+  IRestaurant,
+  ICartItem,
+} from "@/types";
 
 interface IAuthOProviderWithNavigate {
   children: ReactNode;
@@ -52,6 +56,13 @@ interface ISortBy {
 interface IRestaurantInfo {
   restaurant: IRestaurant;
 }
+interface IMenuItemProps {
+  menuItem: IMenuItem;
+}
+interface IOrderSummary {
+  restaurant: IRestaurant;
+  cartItems: ICartItem[];
+}
 export type {
   IAuthOProviderWithNavigate,
   ILoadingButton,
@@ -64,4 +75,6 @@ export type {
   ICuisineFilter,
   ISortBy,
   IRestaurantInfo,
+  IMenuItemProps,
+  IOrderSummary,
 };

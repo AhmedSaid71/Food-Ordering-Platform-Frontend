@@ -6,3 +6,4 @@ export * from "./formsTypes";
 export * from "./sharedTypes";
 export * from "./userTypes";
 export * from "./restaurantTypes";
+export * from "./cartTypes";

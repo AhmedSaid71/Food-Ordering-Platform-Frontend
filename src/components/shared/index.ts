@@ -13,6 +13,8 @@ import SmallSpinner from "./SmallSpinner";
 import SortBy from "./SortBy";
 import Spinner from "./Spinner";
 import UserMenu from "./UserMenu";
+import MenuItem from "./MenuItem";
+import OrderSummary from "./OrderSummary";
 
 export {
   CuisineFilter,
@@ -30,4 +32,6 @@ export {
   SortBy,
   Spinner,
   UserMenu,
+  MenuItem,
+  OrderSummary,
 };
