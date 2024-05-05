@@ -72,3 +72,5 @@ export default authSlice.reducer;
 export const { updateIsAuthenticatedState } = authSlice.actions;
 
 export const getAuthObj = (state: RootState) => state.auth;
+export const getIsAuthenticated = (state: RootState) =>
+  state.auth.isAuthenticated;

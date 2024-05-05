@@ -15,6 +15,7 @@ import Spinner from "./Spinner";
 import UserMenu from "./UserMenu";
 import MenuItem from "./MenuItem";
 import OrderSummary from "./OrderSummary";
+import CheckoutButton from "./CheckoutButton";
 
 export {
   CuisineFilter,
@@ -34,4 +35,5 @@ export {
   UserMenu,
   MenuItem,
   OrderSummary,
+  CheckoutButton,
 };

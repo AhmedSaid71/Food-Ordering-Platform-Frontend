@@ -10,6 +10,8 @@ import {
   MenuItem,
   Card,
   OrderSummary,
+  CardFooter,
+  CheckoutButton,
 } from "@/components";
 
 const Restaurant = () => {
@@ -51,6 +53,13 @@ const Restaurant = () => {
               <div>
                 <Card>
                   <OrderSummary restaurant={restaurant} cartItems={cart} />
+                  <CardFooter>
+                    <CheckoutButton
+                    // disabled={cart.length === 0}
+                    // onCheckout={onCheckout}
+                    // isLoading={isCheckoutLoading}
+                    />
+                  </CardFooter>
                 </Card>
               </div>
             )}

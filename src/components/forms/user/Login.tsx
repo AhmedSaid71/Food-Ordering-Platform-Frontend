@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -20,11 +20,10 @@ import {
   LoadingButton,
 } from "@/components";
 
-
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
+  const { state } = useLocation();
   const { loading } = useAppSelector(getAuthObj);
 
   const form = useForm<TLoginCredentialsValidator>({
@@ -37,7 +36,11 @@ const Login = () => {
       .unwrap()
       .then((message) => {
         toast.success(message);
-        navigate("/");
+        if (state && state.from) {
+          navigate(state.from);
+        } else {
+          navigate("/");
+        }
       })
       .catch((err) => {
         toast.error(err);
