@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { getRestaurant } from "@/services";
-import { getRestaurantInfo, getRestaurantStatus, getCart } from "@/store";
+import { getRestaurantInfo, getRestaurantStatus, getCartDiff } from "@/store";
 import {
   Spinner,
   AspectRatio,
@@ -12,15 +12,15 @@ import {
   OrderSummary,
   CardFooter,
   CheckoutButton,
+  Warning,
 } from "@/components";
 
 const Restaurant = () => {
   const dispatch = useAppDispatch();
   const restaurant = useAppSelector(getRestaurantInfo);
-
-  const cart = useAppSelector(getCart);
   const { id } = useParams();
   const { loading } = useAppSelector(getRestaurantStatus);
+  const diff = useAppSelector(getCartDiff);
 
   useEffect(() => {
     dispatch(getRestaurant(id as string));
@@ -32,6 +32,7 @@ const Restaurant = () => {
 
   return (
     <section className="flex flex-col gap-10">
+      <Warning isOpen={diff} restaurantName={restaurant?.name as string} />
       <AspectRatio ratio={16 / 5}>
         <img
           src={restaurant?.imageUrl}
@@ -46,23 +47,27 @@ const Restaurant = () => {
               <RestaurantInfo restaurant={restaurant} />
               <span className="text-2xl font-bold tracking-tight">Menu</span>
               {restaurant.menuItems.map((menuItem) => (
-                <MenuItem menuItem={menuItem} />
+                <MenuItem
+                  menuItem={menuItem}
+                  restaurantId={restaurant._id}
+                  restaurantName={restaurant.name}
+                  key={menuItem._id}
+                />
               ))}
             </div>
-            {cart.length > 0 && (
-              <div>
-                <Card>
-                  <OrderSummary restaurant={restaurant} cartItems={cart} />
-                  <CardFooter>
-                    <CheckoutButton
-                    // disabled={cart.length === 0}
-                    // onCheckout={onCheckout}
-                    // isLoading={isCheckoutLoading}
-                    />
-                  </CardFooter>
-                </Card>
-              </div>
-            )}
+
+            <div>
+              <Card>
+                <OrderSummary restaurant={restaurant} />
+                <CardFooter>
+                  <CheckoutButton
+                  // disabled={cart.length === 0}
+                  // onCheckout={onCheckout}
+                  // isLoading={isCheckoutLoading}
+                  />
+                </CardFooter>
+              </Card>
+            </div>
           </>
         )}
       </div>

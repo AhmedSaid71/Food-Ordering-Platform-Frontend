@@ -23,6 +23,7 @@ const SortBy = ({ onChange, sortOption }: ISortBy) => {
       <DropdownMenuContent>
         {sortOptions.map((option) => (
           <DropdownMenuItem
+            key={option.label}
             className="cursor-pointer"
             onClick={() => onChange(option.value)}
           >

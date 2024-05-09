@@ -3,11 +3,15 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components";
 import { useAppDispatch } from "@/hooks";
 import { addToCart } from "@/store";
 
-const MenuItem = ({ menuItem }: IMenuItemProps) => {
+const MenuItem = ({
+  menuItem,
+  restaurantId,
+  restaurantName,
+}: IMenuItemProps) => {
   const dispatch = useAppDispatch();
-  
+
   const add = (menuItem: IMenuItem) => {
-    dispatch(addToCart(menuItem));
+    dispatch(addToCart({ menuItem, restaurantId, restaurantName }));
   };
 
   return (

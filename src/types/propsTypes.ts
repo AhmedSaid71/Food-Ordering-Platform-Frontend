@@ -58,10 +58,15 @@ interface IRestaurantInfo {
 }
 interface IMenuItemProps {
   menuItem: IMenuItem;
+  restaurantId: string;
+  restaurantName: string;
 }
 interface IOrderSummary {
   restaurant: IRestaurant;
-  cartItems: ICartItem[];
+}
+interface IWarning {
+  restaurantName: string;
+  isOpen: boolean;
 }
 export type {
   IAuthOProviderWithNavigate,
@@ -77,4 +82,5 @@ export type {
   IRestaurantInfo,
   IMenuItemProps,
   IOrderSummary,
+  IWarning,
 };

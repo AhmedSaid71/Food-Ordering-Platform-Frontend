@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom"
-;
+import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { getAllRestaurants } from "@/services";
 import {
@@ -100,10 +99,7 @@ const Restaurants = () => {
               />
             </div>
             {restaurants.map((restaurant, i) => (
-              <RestaurantCard
-                restaurant={restaurant}
-                key={restaurant._id || i}
-              />
+              <RestaurantCard restaurant={restaurant} key={restaurant._id} />
             ))}
             <PaginationSelector
               page={page}

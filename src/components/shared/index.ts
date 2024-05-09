@@ -16,6 +16,7 @@ import UserMenu from "./UserMenu";
 import MenuItem from "./MenuItem";
 import OrderSummary from "./OrderSummary";
 import CheckoutButton from "./CheckoutButton";
+import Warning from "./Warning";
 
 export {
   CuisineFilter,
@@ -36,4 +37,5 @@ export {
   MenuItem,
   OrderSummary,
   CheckoutButton,
+  Warning,
 };

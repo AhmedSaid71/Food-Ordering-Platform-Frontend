@@ -7,27 +7,28 @@ import {
   Separator,
 } from "@/components";
 import { Trash } from "lucide-react";
-import { useAppDispatch } from "@/hooks";
-import { removeFromCart } from "@/store";
+import { useAppDispatch, useAppSelector } from "@/hooks";
+import { getCart, removeFromCart } from "@/store";
 
-const OrderSummary = ({ restaurant, cartItems }: IOrderSummary) => {
+const OrderSummary = ({ restaurant }: IOrderSummary) => {
   const dispatch = useAppDispatch();
+  const cartItems = useAppSelector(getCart);
 
   const getTotalCost = () => {
-    const total = cartItems.reduce(
-      (totalCost, item) => totalCost + item.price * item.quantity,
+    const total = cartItems?.reduce(
+      (totalCost, item) => totalCost + item?.price * item?.quantity,
       0
     );
-    const totalCost = total + restaurant.deliveryPrice;
+    const totalCost = total + restaurant?.deliveryPrice;
     return (totalCost / 100).toFixed(2);
   };
 
   const remove = (item: ICartItem) => {
     dispatch(removeFromCart(item));
   };
-
+  if (cartItems.length === 0) return null;
   return (
-    <>
+    <section>
       <CardHeader>
         <CardTitle className="text-2xl font-bold tracking-tight flex justify-between">
           <span>Your Order</span>
@@ -37,7 +38,7 @@ const OrderSummary = ({ restaurant, cartItems }: IOrderSummary) => {
       <CardContent className="flex flex-col gap-5">
         <Separator />
         {cartItems.map((item) => (
-          <div className="flex justify-between">
+          <div className="flex justify-between" key={item._id}>
             <span>
               <Badge variant="outline" className="mr-2">
                 {item.quantity}
@@ -61,7 +62,7 @@ const OrderSummary = ({ restaurant, cartItems }: IOrderSummary) => {
           <span>£{(restaurant.deliveryPrice / 100).toFixed(2)}</span>
         </div>
       </CardContent>
-    </>
+    </section>
   );
 };
 
