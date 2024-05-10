@@ -1,12 +1,10 @@
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import toast from "react-hot-toast";
 
-import { getUser, getUserStatus } from "@/store";
-import { useAppDispatch, useAppSelector } from "@/hooks";
-import { updateUser } from "@/services";
+import { useAppSelector } from "@/hooks";
+import { getUser } from "@/store";
 import {
+  IProfileForm,
   IUser,
   TUpdateProfileValidator,
   UpdateProfileValidator,
@@ -25,28 +23,20 @@ import {
   Button,
 } from "@/components";
 
-const ProfileForm = () => {
-  const dispatch = useAppDispatch();
+const ProfileForm = ({
+  onSubmit,
+  title = "User Profile",
+  buttonText = "Submit",
+  loadingBtnText = "Updating...",
+  loading,
+}: IProfileForm) => {
   const user = useAppSelector(getUser);
-  const { loading } = useAppSelector(getUserStatus);
+
   const form = useForm<TUpdateProfileValidator>({
     mode: "onBlur",
     resolver: zodResolver(UpdateProfileValidator),
     defaultValues: user as IUser,
   });
-
-  const onSubmit = (data: TUpdateProfileValidator) => {
-    dispatch(updateUser(data))
-      .unwrap()
-      .then(({ message }) => {
-        toast.success(message);
-      })
-      .catch((err) => toast.error(err));
-  };
-
-  useEffect(() => {
-    form.reset(user as IUser);
-  }, [user, form]);
 
   return (
     <Form {...form}>
@@ -55,7 +45,7 @@ const ProfileForm = () => {
         className="space-y-4 bg-gray-50 rounded-lg md:p-10 p-4"
       >
         <div>
-          <h2 className="text-2xl font-bold">User Profile</h2>
+          <h2 className="text-2xl font-bold">{title}</h2>
           <FormDescription>
             View and change your profile information here
           </FormDescription>
@@ -129,10 +119,10 @@ const ProfileForm = () => {
           />
         </div>
         {loading ? (
-          <LoadingButton title="Updating" />
+          <LoadingButton title={loadingBtnText} />
         ) : (
           <Button type="submit" className="bg-orange-500">
-            Submit
+            {buttonText}
           </Button>
         )}
       </form>

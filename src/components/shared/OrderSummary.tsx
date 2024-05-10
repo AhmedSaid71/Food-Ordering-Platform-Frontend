@@ -26,7 +26,6 @@ const OrderSummary = ({ restaurant }: IOrderSummary) => {
   const remove = (item: ICartItem) => {
     dispatch(removeFromCart(item));
   };
-  if (cartItems.length === 0) return null;
   return (
     <section>
       <CardHeader>

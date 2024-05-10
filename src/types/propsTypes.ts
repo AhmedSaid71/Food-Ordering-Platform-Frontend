@@ -4,7 +4,7 @@ import {
   TSearchBarValidator,
   IMenuItem,
   IRestaurant,
-  ICartItem,
+  TUpdateProfileValidator,
 } from "@/types";
 
 interface IAuthOProviderWithNavigate {
@@ -68,6 +68,13 @@ interface IWarning {
   restaurantName: string;
   isOpen: boolean;
 }
+interface IProfileForm {
+  title?: string;
+  buttonText?: string;
+  loadingBtnText?: string;
+  onSubmit: (data: TUpdateProfileValidator) => void;
+  loading: boolean;
+}
 export type {
   IAuthOProviderWithNavigate,
   ILoadingButton,
@@ -83,4 +90,5 @@ export type {
   IMenuItemProps,
   IOrderSummary,
   IWarning,
+  IProfileForm,
 };

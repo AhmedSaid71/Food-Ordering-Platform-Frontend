@@ -98,7 +98,7 @@ const Restaurants = () => {
                 onChange={(value) => setSortOption(value)}
               />
             </div>
-            {restaurants.map((restaurant, i) => (
+            {restaurants.map((restaurant) => (
               <RestaurantCard restaurant={restaurant} key={restaurant._id} />
             ))}
             <PaginationSelector
