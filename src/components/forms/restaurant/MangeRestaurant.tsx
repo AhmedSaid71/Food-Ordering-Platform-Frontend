@@ -5,6 +5,8 @@ import toast from "react-hot-toast";
 
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { getMyRestaurantInfo, getRestaurantStatus } from "@/store";
+import { MangeRestaurantValidator, TMangeRestaurantValidator } from "@/types";
+import { updateMyRestaurant, createMyRestaurant } from "@/services";
 
 import {
   Form,
@@ -16,9 +18,6 @@ import {
   Button,
   LoadingButton,
 } from "@/components";
-
-import { MangeRestaurantValidator, TMangeRestaurantValidator } from "@/types";
-import { updateMyRestaurant, createMyRestaurant } from "@/services";
 
 const MangeRestaurant = () => {
   const { loading } = useAppSelector(getRestaurantStatus);

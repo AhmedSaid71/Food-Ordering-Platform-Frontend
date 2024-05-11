@@ -8,6 +8,7 @@ import {
   ProfileForm,
 } from "@/components";
 import { useLocation, useNavigate } from "react-router-dom";
+import { TUpdateProfileValidator } from "@/types";
 
 const CheckoutButton = () => {
   const isAuthenticated = useAppSelector(getIsAuthenticated);
@@ -17,8 +18,10 @@ const CheckoutButton = () => {
   const onLogin = () => {
     navigate("/login", { state: { from: pathname } });
   };
-
-  const onCheckout = () => {};
+  const loading = false;
+  const onCheckout = (data: TUpdateProfileValidator) => {
+    console.log(data);
+  };
 
   return (
     <>
@@ -32,7 +35,12 @@ const CheckoutButton = () => {
             <Button className="bg-orange-500 flex-1">Go to checkout</Button>
           </DialogTrigger>
           <DialogContent className="max-w-[425px] md:min-w-[700px] bg-gray-50">
-            {/* <ProfileForm /> */}
+            <ProfileForm
+              onSubmit={onCheckout}
+              loading={loading}
+              title="Confirm Delivery Details"
+              buttonText="Continue to payment"
+            />
           </DialogContent>
         </Dialog>
       )}
