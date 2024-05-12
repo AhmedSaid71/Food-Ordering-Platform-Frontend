@@ -40,6 +40,10 @@ const router = createBrowserRouter([
         children: [
           { path: "/user-profile", element: <Profile /> },
           { path: "/manage-restaurant", element: <MyRestaurant /> },
+          {
+            path: "/test",
+            element: <div>Hello from stripe check out the console </div>,
+          },
         ],
       },
       { path: "/login", element: <Login /> },

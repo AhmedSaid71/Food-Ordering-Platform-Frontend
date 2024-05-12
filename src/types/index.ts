@@ -7,3 +7,4 @@ export * from "./sharedTypes";
 export * from "./userTypes";
 export * from "./restaurantTypes";
 export * from "./cartTypes";
+export * from "./orderTypes";

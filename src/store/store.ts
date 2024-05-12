@@ -3,6 +3,7 @@ import authReducer from "./authSlice";
 import userReducer from "./userSlice";
 import restaurantReducer from "./restaurantSlice";
 import cartReducer from "./cartSlice";
+import orderReducer from "./orderSlice";
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     user: userReducer,
     restaurant: restaurantReducer,
     cart: cartReducer,
+    order: orderReducer,
   },
 });
 

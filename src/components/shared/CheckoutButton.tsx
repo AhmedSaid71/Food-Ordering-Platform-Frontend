@@ -1,5 +1,5 @@
-import { getIsAuthenticated } from "@/store";
-import { useAppSelector } from "@/hooks";
+import { getCart, getIsAuthenticated, getRestaurantInfo } from "@/store";
+import { useAppDispatch, useAppSelector } from "@/hooks";
 import {
   Button,
   Dialog,
@@ -9,18 +9,55 @@ import {
 } from "@/components";
 import { useLocation, useNavigate } from "react-router-dom";
 import { TUpdateProfileValidator } from "@/types";
-
-const CheckoutButton = () => {
-  const isAuthenticated = useAppSelector(getIsAuthenticated);
+import { api } from "@/utils";
+import { useState } from "react";
+type prop = {
+  restaurantId: string;
+};
+const CheckoutButton = ({ restaurantId }: prop) => {
+  const [loading, setLoading] = useState(false);
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const isAuthenticated = useAppSelector(getIsAuthenticated);
+  const cartItems = useAppSelector(getCart);
+  const restaurant = useAppSelector(getRestaurantInfo);
 
   const onLogin = () => {
     navigate("/login", { state: { from: pathname } });
   };
-  const loading = false;
-  const onCheckout = (data: TUpdateProfileValidator) => {
-    console.log(data);
+
+  const onCheckout = async (data: TUpdateProfileValidator) => {
+    if (!restaurant) return;
+
+    const checkoutData = {
+      cartItems: cartItems.map((cartItem) => ({
+        menuItemId: cartItem._id,
+        name: cartItem.name,
+        quantity: cartItem.quantity.toString(),
+      })),
+      restaurantId,
+      deliveryDetails: {
+        name: data.name,
+        addressLine1: data.addressLine1,
+        city: data.city,
+        country: data.country,
+        email: data.email as string,
+      },
+    };
+    try {
+      setLoading(true);
+      const res = await api.post(
+        "/orders/checkout/create-checkout-session",
+        checkoutData
+      );
+      window.location.href = res?.data?.url;
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -40,6 +77,7 @@ const CheckoutButton = () => {
               loading={loading}
               title="Confirm Delivery Details"
               buttonText="Continue to payment"
+              loadingBtnText="Continue to payment"
             />
           </DialogContent>
         </Dialog>

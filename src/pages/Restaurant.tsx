@@ -61,9 +61,10 @@ const Restaurant = () => {
                 <OrderSummary restaurant={restaurant} />
                 <CardFooter>
                   <CheckoutButton
-                  // disabled={cart.length === 0}
-                  // onCheckout={onCheckout}
-                  // isLoading={isCheckoutLoading}
+                    restaurantId={restaurant._id}
+                    // disabled={cart.length === 0}
+                    // onCheckout={onCheckout}
+                    // isLoading={isCheckoutLoading}
                   />
                 </CardFooter>
               </Card>
