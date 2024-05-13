@@ -1,5 +1,11 @@
 import { setUser } from "@/store/userSlice";
-import { ILoginUserRequest, ISignupUserRequest } from "@/types";
+import {
+  ILoginUserRequest,
+  ILoginUserResponse,
+  ILogoutUserResponse,
+  ISignupUserRequest,
+  ISignupUserResponse,
+} from "@/types";
 import { api, axiosErrorHandler } from "@/utils";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
@@ -8,7 +14,7 @@ export const signup = createAsyncThunk(
   async (data: ISignupUserRequest, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     try {
-      const res = await api.post("/auth/signup", data);
+      const res = await api.post<ISignupUserResponse>("/auth/signup", data);
       const { message } = res.data;
       return message;
     } catch (error) {
@@ -22,7 +28,7 @@ export const login = createAsyncThunk(
   async (data: ILoginUserRequest, thunkAPI) => {
     const { rejectWithValue, dispatch } = thunkAPI;
     try {
-      const res = await api.post("/auth/login", data);
+      const res = await api.post<ILoginUserResponse>("/auth/login", data);
       const user = res.data.data.user;
       const message = res.data.message;
       dispatch(setUser(user));
@@ -36,7 +42,7 @@ export const login = createAsyncThunk(
 export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
   const { rejectWithValue, dispatch } = thunkAPI;
   try {
-    const res = await api.get("/auth/logout");
+    const res = await api.get<ILogoutUserResponse>("/auth/logout");
     dispatch(setUser(null));
     const message = res.data.message;
     return message;

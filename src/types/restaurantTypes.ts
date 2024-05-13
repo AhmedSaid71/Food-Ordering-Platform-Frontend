@@ -15,7 +15,7 @@ interface IRestaurant {
   cuisines: string[];
   menuItems: IMenuItem[];
   imageUrl: string;
-  lastUpdated: string;
+  lastUpdated: Date;
 }
 
 interface IRestaurantInitialState {
@@ -37,10 +37,39 @@ interface IRestaurantsInitialState {
   loading: boolean;
   error: string | null;
 }
-
+interface ICreateMyRestaurantResponse {
+  status: string;
+  message: string;
+  data: { restaurant: IRestaurant };
+}
+interface IGetMyRestaurantResponse {
+  status: string;
+  data: { restaurant: IRestaurant };
+}
+interface IUpdateMyRestaurantResponse {
+  status: string;
+  message: string;
+  data: { restaurant: IRestaurant };
+}
+interface IGetRestaurantResponse {
+  status: string;
+  data: { restaurant: IRestaurant };
+}
+interface IGetAllRestaurantsResponse {
+  status: string;
+  page: number;
+  pages: number;
+  total: number;
+  data: { restaurants: IRestaurant[] };
+}
 export type {
   IMenuItem,
   IRestaurant,
   IRestaurantInitialState,
   IRestaurantsInitialState,
+  ICreateMyRestaurantResponse,
+  IGetMyRestaurantResponse,
+  IUpdateMyRestaurantResponse,
+  IGetAllRestaurantsResponse,
+  IGetRestaurantResponse,
 };

@@ -12,5 +12,18 @@ interface IUserInitialState {
   error: null | string;
   message: null | string;
 }
-
-export type { IUser, IUserInitialState };
+interface IGetUserDataResponse {
+  status: string;
+  data: { user: IUser };
+}
+interface IUpdateUserDataResponse {
+  status: string;
+  message: string;
+  data: { user: IUser };
+}
+export type {
+  IUser,
+  IUserInitialState,
+  IGetUserDataResponse,
+  IUpdateUserDataResponse,
+};

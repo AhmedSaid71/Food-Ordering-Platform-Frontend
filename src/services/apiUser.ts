@@ -1,5 +1,9 @@
 import { updateIsAuthenticatedState } from "@/store/authSlice";
-import { IUpdateUserRequest } from "@/types";
+import {
+  IGetUserDataResponse,
+  IUpdateUserDataResponse,
+  IUpdateUserRequest,
+} from "@/types";
 import { api, axiosErrorHandler } from "@/utils";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
@@ -8,9 +12,9 @@ export const getUserData = createAsyncThunk(
   async (_, thunkAPI) => {
     const { rejectWithValue, dispatch } = thunkAPI;
     try {
-      const res = await api.get("/users/me");
+      const res = await api.get<IGetUserDataResponse>("/users/me");
       dispatch(updateIsAuthenticatedState(true));
-      return res.data;
+      return res.data.data.user;
     } catch (error) {
       return rejectWithValue(axiosErrorHandler(error));
     }
@@ -22,7 +26,10 @@ export const updateUser = createAsyncThunk(
   async (data: IUpdateUserRequest, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     try {
-      const res = await api.patch("/users/updateMe", data);
+      const res = await api.patch<IUpdateUserDataResponse>(
+        "/users/updateMe",
+        data
+      );
       const message = res.data.message;
       const user = res.data.data.user;
       return { user, message };

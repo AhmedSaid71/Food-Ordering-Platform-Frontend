@@ -1,13 +1,23 @@
-import { IGetAllResultsHandler } from "@/types";
-import { api, axiosErrorHandler } from "@/utils";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { api, axiosErrorHandler } from "@/utils";
+import {
+  ICreateMyRestaurantResponse,
+  IGetAllRestaurantsResponse,
+  IGetAllResultsHandler,
+  IGetMyRestaurantResponse,
+  IGetRestaurantResponse,
+  IUpdateMyRestaurantResponse,
+} from "@/types";
 
 export const createMyRestaurant = createAsyncThunk(
   "restaurant/createMyRestaurant",
   async (data: FormData, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     try {
-      const res = await api.post("/restaurants", data);
+      const res = await api.post<ICreateMyRestaurantResponse>(
+        "/restaurants",
+        data
+      );
       const restaurant = res.data.data.restaurant;
       const message = res.data.message;
       return { restaurant, message };
@@ -22,7 +32,7 @@ export const getMyRestaurant = createAsyncThunk(
   async (_, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     try {
-      const res = await api.get("/restaurants/me");
+      const res = await api.get<IGetMyRestaurantResponse>("/restaurants/me");
       const restaurant = res.data.data.restaurant;
       return restaurant;
     } catch (error) {
@@ -36,7 +46,10 @@ export const updateMyRestaurant = createAsyncThunk(
   async (data: FormData, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     try {
-      const res = await api.patch("/restaurants", data);
+      const res = await api.patch<IUpdateMyRestaurantResponse>(
+        "/restaurants",
+        data
+      );
       const restaurant = res.data.data.restaurant;
       const message = res.data.message;
       return { restaurant, message };
@@ -56,7 +69,7 @@ export const getAllRestaurants = createAsyncThunk(
     params.set("selectedCuisines", data.searchState.selectedCuisines.join(","));
     params.set("sortOption", data.searchState.sortOption);
     try {
-      const res = await api.get(
+      const res = await api.get<IGetAllRestaurantsResponse>(
         `/restaurants/${data.city}?${params.toString()}`
       );
       const total = res.data.total;
@@ -75,7 +88,9 @@ export const getRestaurant = createAsyncThunk(
   async (id: string, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     try {
-      const res = await api.get(`/restaurants/details/${id}`);
+      const res = await api.get<IGetRestaurantResponse>(
+        `/restaurants/details/${id}`
+      );
       const restaurant = res.data.data.restaurant;
       return restaurant;
     } catch (error) {

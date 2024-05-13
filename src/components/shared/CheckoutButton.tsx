@@ -9,8 +9,8 @@ import {
 } from "@/components";
 import { useLocation, useNavigate } from "react-router-dom";
 import { TUpdateProfileValidator } from "@/types";
-import { api } from "@/utils";
 import { useState } from "react";
+import { createCheckoutSession } from "@/services";
 type prop = {
   restaurantId: string;
 };
@@ -29,7 +29,6 @@ const CheckoutButton = ({ restaurantId }: prop) => {
 
   const onCheckout = async (data: TUpdateProfileValidator) => {
     if (!restaurant) return;
-
     const checkoutData = {
       cartItems: cartItems.map((cartItem) => ({
         menuItemId: cartItem._id,
@@ -45,18 +44,7 @@ const CheckoutButton = ({ restaurantId }: prop) => {
         email: data.email as string,
       },
     };
-    try {
-      setLoading(true);
-      const res = await api.post(
-        "/orders/checkout/create-checkout-session",
-        checkoutData
-      );
-      window.location.href = res?.data?.url;
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
+    createCheckoutSession(checkoutData, setLoading);
   };
 
   return (

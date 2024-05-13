@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "@/hooks";
-import { getRestaurant } from "@/services";
+import { getOrders, getRestaurant } from "@/services";
 import { getRestaurantInfo, getRestaurantStatus, getCartDiff } from "@/store";
 import {
   Spinner,
@@ -24,6 +24,7 @@ const Restaurant = () => {
 
   useEffect(() => {
     dispatch(getRestaurant(id as string));
+    dispatch(getOrders());
   }, [dispatch, id]);
 
   if (loading) {
@@ -60,12 +61,7 @@ const Restaurant = () => {
               <Card>
                 <OrderSummary restaurant={restaurant} />
                 <CardFooter>
-                  <CheckoutButton
-                    restaurantId={restaurant._id}
-                    // disabled={cart.length === 0}
-                    // onCheckout={onCheckout}
-                    // isLoading={isCheckoutLoading}
-                  />
+                  <CheckoutButton restaurantId={restaurant._id} />
                 </CardFooter>
               </Card>
             </div>
