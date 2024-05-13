@@ -1,6 +1,5 @@
 import { ICheckoutSessionRequest } from "@/types";
-import { api, axiosErrorHandler } from "@/utils";
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { api } from "@/utils";
 
 export const createCheckoutSession = async (data: ICheckoutSessionRequest) => {
   try {

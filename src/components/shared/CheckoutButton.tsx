@@ -1,5 +1,5 @@
 import { getCart, getIsAuthenticated, getRestaurantInfo } from "@/store";
-import { useAppDispatch, useAppSelector } from "@/hooks";
+import { useAppSelector } from "@/hooks";
 import {
   Button,
   Dialog,
@@ -18,7 +18,6 @@ const CheckoutButton = ({ restaurantId }: prop) => {
   const [loading, setLoading] = useState(false);
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
 
   const isAuthenticated = useAppSelector(getIsAuthenticated);
   const cartItems = useAppSelector(getCart);
