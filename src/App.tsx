@@ -3,21 +3,21 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Provider } from "react-redux";
 import { Toaster } from "react-hot-toast";
 
-import { getUserData } from "./services";
-import Layout from "./layouts/layout";
-import HomeLayout from "./layouts/HomeLayout";
+import { getUserData } from "@/services";
+import { Layout, HomeLayout } from "@/layouts";
 import store from "./store/store";
 import {
   Login,
   MyRestaurant,
+  Orders,
   Profile,
   ProtectedRoutes,
   Register,
   Restaurant,
   Restaurants,
-} from "./pages";
+} from "@/pages";
+import { Spinner } from "@/components";
 
-import { Spinner } from "./components";
 const router = createBrowserRouter([
   {
     index: true,
@@ -41,8 +41,8 @@ const router = createBrowserRouter([
           { path: "/user-profile", element: <Profile /> },
           { path: "/manage-restaurant", element: <MyRestaurant /> },
           {
-            path: "/test",
-            element: <div>Hello from stripe check out the console </div>,
+            path: "/orders",
+            element: <Orders />,
           },
         ],
       },

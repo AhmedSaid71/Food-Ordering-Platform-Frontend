@@ -8,7 +8,6 @@ import {
   getRestaurantStatus,
 } from "@/store";
 import { TSearchBarValidator, TSearchState } from "@/types";
-
 import {
   CuisineFilter,
   PaginationSelector,
@@ -71,7 +70,7 @@ const Restaurants = () => {
   if (!restaurants) return <span>there are no results</span>;
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-[250px_1fr] gap-5">
+    <section className="grid grid-cols-1 lg:grid-cols-[250px_1fr] gap-5">
       <div id="cuisines-list">
         <CuisineFilter
           selectedCuisines={searchState.selectedCuisines}
@@ -109,7 +108,7 @@ const Restaurants = () => {
           </>
         )}
       </div>
-    </div>
+    </section>
   );
 };
 

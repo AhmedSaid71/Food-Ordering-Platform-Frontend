@@ -1,7 +1,7 @@
-import { download, landing } from "@/assets";
-import { SearchBar } from "@/components";
-import { TSearchBarValidator } from "@/types";
 import { useNavigate } from "react-router-dom";
+import { SearchBar } from "@/components";
+import { download, landing } from "@/assets";
+import { TSearchBarValidator } from "@/types";
 
 const Home = () => {
   const navigate = useNavigate();

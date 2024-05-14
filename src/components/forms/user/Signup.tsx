@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import toast from "react-hot-toast";
 
-import { getAuthObj } from "@/store";
+import { getAuthStatus } from "@/store";
 import { signup } from "@/services";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import {
@@ -26,7 +26,7 @@ import {
 const Signup = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { loading } = useAppSelector(getAuthObj);
+  const { loading } = useAppSelector(getAuthStatus);
 
   const form = useForm<TSignupCredentialsValidator>({
     resolver: zodResolver(SignupCredentialsValidator),

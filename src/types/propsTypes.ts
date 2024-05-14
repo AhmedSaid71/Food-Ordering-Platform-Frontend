@@ -5,6 +5,7 @@ import {
   IMenuItem,
   IRestaurant,
   TUpdateProfileValidator,
+  IOrder,
 } from "@/types";
 
 interface IAuthOProviderWithNavigate {
@@ -75,6 +76,12 @@ interface IProfileForm {
   onSubmit: (data: TUpdateProfileValidator) => void;
   loading: boolean;
 }
+interface IOrderStatusHeader {
+  order: IOrder;
+}
+interface IOrderStatusDetails {
+  order: IOrder;
+}
 export type {
   IAuthOProviderWithNavigate,
   ILoadingButton,
@@ -91,4 +98,6 @@ export type {
   IOrderSummary,
   IWarning,
   IProfileForm,
+  IOrderStatusHeader,
+  IOrderStatusDetails,
 };

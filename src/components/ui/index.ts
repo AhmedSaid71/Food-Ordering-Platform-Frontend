@@ -73,6 +73,7 @@ import {
   SheetDescription,
 } from "./sheet";
 import { Badge, badgeVariants } from "./badge";
+import { Progress } from "./progress";
 export {
   AspectRatio,
   Button,
@@ -139,4 +140,5 @@ export {
   Separator,
   Badge,
   badgeVariants,
+  Progress,
 };

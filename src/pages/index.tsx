@@ -8,6 +8,7 @@ const ProtectedRoutes = lazy(() => import("./ProtectedRoutes"));
 const Restaurant = lazy(() => import("./Restaurant"));
 const Restaurants = lazy(() => import("./Restaurants"));
 const MyRestaurant = lazy(() => import("./MyRestaurant"));
+const Orders = lazy(() => import("./Orders"));
 
 export {
   Home,
@@ -18,4 +19,5 @@ export {
   Restaurant,
   Restaurants,
   MyRestaurant,
+  Orders,
 };

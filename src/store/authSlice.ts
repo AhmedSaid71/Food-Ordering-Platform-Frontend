@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 import { isString } from "@/utils";
 import { RootState } from "@/store";
 import { IAuthInitialState } from "@/types";
@@ -71,6 +71,15 @@ const authSlice = createSlice({
 export default authSlice.reducer;
 export const { updateIsAuthenticatedState } = authSlice.actions;
 
-export const getAuthObj = (state: RootState) => state.auth;
+const loading = (state: RootState) => state.auth.loading;
+const error = (state: RootState) => state.auth.error;
+
+export const getAuthMessage = (state: RootState) => state.auth.message;
 export const getIsAuthenticated = (state: RootState) =>
   state.auth.isAuthenticated;
+export const getAuthStatus = createSelector(
+  [loading, error],
+  (loading, error) => {
+    return { loading, error };
+  }
+);

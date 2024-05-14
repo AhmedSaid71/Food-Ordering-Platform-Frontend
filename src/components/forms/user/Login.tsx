@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { login } from "@/services";
-import { getAuthObj } from "@/store";
+import { getAuthStatus } from "@/store";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { LoginCredentialsValidator, TLoginCredentialsValidator } from "@/types";
 
@@ -24,7 +24,7 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { state } = useLocation();
-  const { loading } = useAppSelector(getAuthObj);
+  const { loading } = useAppSelector(getAuthStatus);
 
   const form = useForm<TLoginCredentialsValidator>({
     mode: "onBlur",

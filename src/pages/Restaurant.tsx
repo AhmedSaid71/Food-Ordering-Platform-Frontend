@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "@/hooks";
-import { getOrders, getRestaurant } from "@/services";
+import { getRestaurant } from "@/services";
 import { getRestaurantInfo, getRestaurantStatus, getCartDiff } from "@/store";
 import {
   Spinner,
@@ -24,7 +24,6 @@ const Restaurant = () => {
 
   useEffect(() => {
     dispatch(getRestaurant(id as string));
-    dispatch(getOrders());
   }, [dispatch, id]);
 
   if (loading) {

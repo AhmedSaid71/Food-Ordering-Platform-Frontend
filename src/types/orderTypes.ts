@@ -1,4 +1,11 @@
-import { ICartItem, IRestaurant, IUser } from "@/types";
+import { IRestaurant, IUser } from "@/types";
+
+export interface IOrdersInitialState {
+  orders: IOrder[];
+  loading: boolean;
+  error: null | string;
+}
+
 export interface ICheckoutSessionRequest {
   cartItems: {
     menuItemId: string;
@@ -22,27 +29,32 @@ export interface ICheckoutSessionResponse {
 export interface IGetOrdersResponse {
   status: string;
   data: {
-    orders: Order[];
+    orders: IOrder[];
   };
 }
-export interface Order {
-  deliveryDetails: IDeliveryDetails;
+export interface IOrder {
   _id: string;
   restaurant: IRestaurant;
   user: IUser;
-  cartItems: TCartItem[];
-  status: string;
-  totalAmount?: number;
+  cartItems: {
+    menuItemId: string;
+    name: string;
+    quantity: string;
+  }[];
+  deliveryDetails: {
+    name: string;
+    addressLine1: string;
+    city: string;
+    email: string;
+  };
+  totalAmount: number;
+  status: TOrderStatus;
+  createdAt: string;
+  restaurantId: string;
 }
-export type TCartItem = {
-  menuItemId: string;
-  quantity: number;
-  name: string;
-  _id: string;
-};
-export interface IDeliveryDetails {
-  email: string;
-  name: string;
-  addressLine1: string;
-  city: string;
-}
+export type TOrderStatus =
+  | "placed"
+  | "paid"
+  | "inProgress"
+  | "outForDelivery"
+  | "delivered";
