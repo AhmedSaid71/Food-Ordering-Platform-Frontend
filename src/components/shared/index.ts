@@ -19,7 +19,8 @@ import CheckoutButton from "./CheckoutButton";
 import Warning from "./Warning";
 import OrderStatusHeader from "./OrderStatusHeader";
 import OrderStatusDetails from "./OrderStatusDetails";
-import MobileNav from './MobileNav';
+import MobileNav from "./MobileNav";
+import OrderItemCard from "./OrderItemCard";
 
 export {
   CuisineFilter,
@@ -43,5 +44,6 @@ export {
   Warning,
   OrderStatusHeader,
   OrderStatusDetails,
-  MobileNav
+  MobileNav,
+  OrderItemCard,
 };

@@ -6,6 +6,7 @@ import {
   createMyRestaurant,
   getAllRestaurants,
   getMyRestaurant,
+  getMyRestaurantOrders,
   getRestaurant,
   updateMyRestaurant,
 } from "@/services";
@@ -20,6 +21,7 @@ const initialState: IRestaurantInitialState = {
   total: 0,
   page: 0,
   pages: 0,
+  orders: [],
 };
 
 const restaurantSlice = createSlice({
@@ -111,6 +113,22 @@ const restaurantSlice = createSlice({
         if (isString(action.payload)) {
           state.error = action.payload;
         }
+      })
+
+      //get myRestaurant Orders
+      .addCase(getMyRestaurantOrders.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getMyRestaurantOrders.fulfilled, (state, action) => {
+        state.loading = false;
+        state.orders = action.payload;
+      })
+      .addCase(getMyRestaurantOrders.rejected, (state, action) => {
+        state.loading = false;
+        if (isString(action.payload)) {
+          state.error = action.payload;
+        }
       });
   },
 });
@@ -130,6 +148,8 @@ export const getRestaurantInfo = (state: RootState) =>
 export const getAllRestaurantsInfo = (state: RootState) =>
   state.restaurant.restaurants;
 
+export const getRestaurantOrders = (state: RootState) =>
+  state.restaurant.orders;
 export const getRestaurantStatus = createSelector(
   [loading, error],
   (loading, error) => {

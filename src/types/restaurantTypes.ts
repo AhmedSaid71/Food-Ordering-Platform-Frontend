@@ -1,3 +1,5 @@
+import { IOrder } from "./orderTypes";
+
 interface IMenuItem {
   _id: string;
   name: string;
@@ -28,6 +30,7 @@ interface IRestaurantInitialState {
   total: number;
   page: number;
   pages: number;
+  orders: IOrder[];
 }
 
 interface IRestaurantsInitialState {
@@ -62,6 +65,12 @@ interface IGetAllRestaurantsResponse {
   total: number;
   data: { restaurants: IRestaurant[] };
 }
+interface IGetMyRestaurantOrdersResponse {
+  status: string;
+  data: {
+    orders: IOrder[];
+  };
+}
 export type {
   IMenuItem,
   IRestaurant,
@@ -72,4 +81,5 @@ export type {
   IUpdateMyRestaurantResponse,
   IGetAllRestaurantsResponse,
   IGetRestaurantResponse,
+  IGetMyRestaurantOrdersResponse,
 };

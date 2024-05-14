@@ -4,6 +4,7 @@ import {
   ICreateMyRestaurantResponse,
   IGetAllRestaurantsResponse,
   IGetAllResultsHandler,
+  IGetMyRestaurantOrdersResponse,
   IGetMyRestaurantResponse,
   IGetRestaurantResponse,
   IUpdateMyRestaurantResponse,
@@ -93,6 +94,21 @@ export const getRestaurant = createAsyncThunk(
       );
       const restaurant = res.data.data.restaurant;
       return restaurant;
+    } catch (error) {
+      return rejectWithValue(axiosErrorHandler(error));
+    }
+  }
+);
+
+export const getMyRestaurantOrders = createAsyncThunk(
+  "restaurants/getMyRestaurantOrders",
+  async (_, thunkAPI) => {
+    const { rejectWithValue } = thunkAPI;
+    try {
+      const res = await api.get<IGetMyRestaurantOrdersResponse>(
+        "/restaurants/order"
+      );
+      return res.data.data.orders;
     } catch (error) {
       return rejectWithValue(axiosErrorHandler(error));
     }

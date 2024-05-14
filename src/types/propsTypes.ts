@@ -82,6 +82,9 @@ interface IOrderStatusHeader {
 interface IOrderStatusDetails {
   order: IOrder;
 }
+interface IOrderItemCard {
+  order: IOrder;
+}
 export type {
   IAuthOProviderWithNavigate,
   ILoadingButton,
@@ -100,4 +103,5 @@ export type {
   IProfileForm,
   IOrderStatusHeader,
   IOrderStatusDetails,
+  IOrderItemCard,
 };

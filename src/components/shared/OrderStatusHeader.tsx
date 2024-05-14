@@ -1,22 +1,13 @@
 import { IOrderStatusHeader } from "@/types";
 import { Progress } from "@/components";
 import { ORDER_STATUS } from "@/constants";
+import { getTime } from "@/utils";
 
 const OrderStatusHeader = ({ order }: IOrderStatusHeader) => {
-  const getExpectedDelivery = () => {
-    const created = new Date(order.createdAt);
-
-    created.setMinutes(
-      created.getMinutes() + order.restaurant.estimatedDeliveryTime
-    );
-
-    const hours = created.getHours();
-    const minutes = created.getMinutes();
-
-    const paddedMinutes = minutes < 10 ? `0${minutes}` : minutes;
-
-    return `${hours}:${paddedMinutes}`;
-  };
+  const expectedDelivery = getTime(
+    order.createdAt,
+    order.restaurant.estimatedDeliveryTime
+  );
 
   const getOrderStatusInfo = () => {
     return (
@@ -27,7 +18,7 @@ const OrderStatusHeader = ({ order }: IOrderStatusHeader) => {
     <>
       <h1 className="text-4xl font-bold tracking-tighter flex flex-col gap-5 md:flex-row md:justify-between">
         <span> Order Status: {getOrderStatusInfo().label}</span>
-        <span> Expected by: {getExpectedDelivery()}</span>
+        <span> Expected by: {expectedDelivery}</span>
       </h1>
       <Progress
         className="animate-pulse"

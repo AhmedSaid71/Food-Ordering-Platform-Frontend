@@ -74,6 +74,19 @@ import {
 } from "./sheet";
 import { Badge, badgeVariants } from "./badge";
 import { Progress } from "./progress";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "./tabs";
+import {
+  Select,
+  SelectGroup,
+  SelectValue,
+  SelectTrigger,
+  SelectContent,
+  SelectLabel,
+  SelectItem,
+  SelectSeparator,
+  SelectScrollUpButton,
+  SelectScrollDownButton,
+} from "./select";
 export {
   AspectRatio,
   Button,
@@ -141,4 +154,18 @@ export {
   Badge,
   badgeVariants,
   Progress,
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  TabsContent,
+  Select,
+  SelectGroup,
+  SelectValue,
+  SelectTrigger,
+  SelectContent,
+  SelectLabel,
+  SelectItem,
+  SelectSeparator,
+  SelectScrollUpButton,
+  SelectScrollDownButton,
 };
