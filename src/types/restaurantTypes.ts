@@ -71,6 +71,16 @@ interface IGetMyRestaurantOrdersResponse {
     orders: IOrder[];
   };
 }
+interface IUpdateOrderStatusResponse {
+  status: string;
+  data: {
+    order: IOrder;
+  };
+}
+interface IUpdateOrderStatusRequest {
+  orderId: string;
+  status: string;
+}
 export type {
   IMenuItem,
   IRestaurant,
@@ -82,4 +92,6 @@ export type {
   IGetAllRestaurantsResponse,
   IGetRestaurantResponse,
   IGetMyRestaurantOrdersResponse,
+  IUpdateOrderStatusResponse,
+  IUpdateOrderStatusRequest,
 };

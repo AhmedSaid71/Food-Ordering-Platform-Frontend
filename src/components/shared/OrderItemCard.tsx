@@ -16,9 +16,12 @@ import {
 } from "@/components";
 import { useEffect, useState } from "react";
 import { getTime } from "@/utils";
+import { useAppDispatch } from "@/hooks";
+import { updateOrderStatus } from "@/services";
 
 const OrderItemCard = ({ order }: IOrderItemCard) => {
   // const { updateRestaurantStatus, isLoading } = useUpdateMyRestaurantOrder();
+  const dispatch = useAppDispatch();
   const [status, setStatus] = useState<TOrderStatus>(order.status);
   const isLoading = false;
   useEffect(() => {
@@ -26,6 +29,10 @@ const OrderItemCard = ({ order }: IOrderItemCard) => {
   }, [order.status]);
 
   const handleStatusChange = async (newStatus: TOrderStatus) => {
+    dispatch(
+      updateOrderStatus({ status: newStatus, orderId: order._id as string })
+    );
+    console.log(newStatus);
     setStatus(newStatus);
   };
 
@@ -63,7 +70,7 @@ const OrderItemCard = ({ order }: IOrderItemCard) => {
       <CardContent className="flex flex-col gap-6">
         <div className="flex flex-col gap-2">
           {order.cartItems.map((cartItem) => (
-            <span>
+            <span key={cartItem.menuItemId}>
               <Badge variant="outline" className="mr-2">
                 {cartItem.quantity}
               </Badge>
@@ -83,7 +90,9 @@ const OrderItemCard = ({ order }: IOrderItemCard) => {
             </SelectTrigger>
             <SelectContent position="popper">
               {ORDER_STATUS.map((status) => (
-                <SelectItem value={status.value}>{status.label}</SelectItem>
+                <SelectItem value={status.value} key={status.label}>
+                  {status.label}
+                </SelectItem>
               ))}
             </SelectContent>
           </Select>

@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 import { useAppDispatch, useAppSelector } from "@/hooks";
-import { getUser } from "@/store";
+import { getUser, setDefault, setDefaultOrders } from "@/store";
 import { logout } from "@/services";
 import { CircleUserRound } from "lucide-react";
 
@@ -21,6 +21,8 @@ const UserMenu = () => {
   const dispatch = useAppDispatch();
 
   const handleClick = () => {
+    dispatch(setDefault());
+    dispatch(setDefaultOrders());
     dispatch(logout())
       .unwrap()
       .then((message) => {

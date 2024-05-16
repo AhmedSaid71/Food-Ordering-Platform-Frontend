@@ -8,6 +8,8 @@ import {
   IGetMyRestaurantResponse,
   IGetRestaurantResponse,
   IUpdateMyRestaurantResponse,
+  IUpdateOrderStatusRequest,
+  IUpdateOrderStatusResponse,
 } from "@/types";
 
 export const createMyRestaurant = createAsyncThunk(
@@ -109,6 +111,22 @@ export const getMyRestaurantOrders = createAsyncThunk(
         "/restaurants/order"
       );
       return res.data.data.orders;
+    } catch (error) {
+      return rejectWithValue(axiosErrorHandler(error));
+    }
+  }
+);
+
+export const updateOrderStatus = createAsyncThunk(
+  "restaurant/updateOrderStatus",
+  async ({ status, orderId }: IUpdateOrderStatusRequest, thunkAPI) => {
+    const { rejectWithValue } = thunkAPI;
+    try {
+      const res = await api.patch<IUpdateOrderStatusResponse>(
+        `/restaurants/order/${orderId}/status`,
+        { status }
+      );
+      return res.data.data.order;
     } catch (error) {
       return rejectWithValue(axiosErrorHandler(error));
     }

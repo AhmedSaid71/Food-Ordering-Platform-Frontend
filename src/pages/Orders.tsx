@@ -1,5 +1,6 @@
 import {
   AspectRatio,
+  Button,
   OrderStatusDetails,
   OrderStatusHeader,
   Spinner,
@@ -8,12 +9,13 @@ import { useAppDispatch, useAppSelector } from "@/hooks";
 import { getOrders } from "@/services";
 import { getOrdersData, getOrdersStatus } from "@/store";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Orders = () => {
   const orders = useAppSelector(getOrdersData);
   const { loading } = useAppSelector(getOrdersStatus);
   const dispatch = useAppDispatch();
-
+  const navigate = useNavigate();
   useEffect(() => {
     dispatch(getOrders());
   }, [dispatch]);
@@ -24,6 +26,14 @@ const Orders = () => {
 
   return (
     <section className="md:space-y-10">
+      {orders.length === 0 && (
+        <div className="mt-10 w-full flex items-center justify-center flex-col gap-4">
+          <h1 className="text-xl">You don't have any orders</h1>
+          <Button className="bg-orange-500 w-fit" onClick={() => navigate("/")}>
+            Back to home
+          </Button>
+        </div>
+      )}
       {orders?.map((order) => (
         <div className="space-y-10 bg-gray-50 p-10 rounded-lg" key={order._id}>
           <OrderStatusHeader order={order} />

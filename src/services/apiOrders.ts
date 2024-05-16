@@ -32,7 +32,6 @@ export const getOrders = createAsyncThunk(
     const { rejectWithValue } = thunkAPI;
     try {
       const res = await api.get<IGetOrdersResponse>("/orders");
-      console.log(res.data);
       return res.data.data.orders;
     } catch (error) {
       return rejectWithValue(axiosErrorHandler(error));

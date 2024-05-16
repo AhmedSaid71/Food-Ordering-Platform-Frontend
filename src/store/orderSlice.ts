@@ -13,7 +13,13 @@ const initialState: IOrdersInitialState = {
 const orderSlice = createSlice({
   name: "order",
   initialState,
-  reducers: {},
+  reducers: {
+    setDefaultOrders: (state) => {
+      state.orders = [];
+      state.loading = false;
+      state.error = null;
+    },
+  },
   extraReducers: (builder) =>
     builder
       .addCase(getOrders.pending, (state) => {
@@ -32,6 +38,7 @@ const orderSlice = createSlice({
       }),
 });
 
+export const { setDefaultOrders } = orderSlice.actions;
 export default orderSlice.reducer;
 
 const loading = (state: RootState) => state.order.loading;

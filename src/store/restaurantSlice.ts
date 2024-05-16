@@ -27,7 +27,20 @@ const initialState: IRestaurantInitialState = {
 const restaurantSlice = createSlice({
   name: "restaurant",
   initialState,
-  reducers: {},
+  reducers: {
+    setDefault: (state) => {
+      state.restaurant = null;
+      state.restaurants = [];
+      state.myRestaurant = null;
+      state.message = null;
+      state.loading = false;
+      state.error = null;
+      state.total = 0;
+      state.page = 0;
+      state.pages = 0;
+      state.orders = [];
+    },
+  },
   extraReducers: (builder) => {
     builder
       //create my restaurant
@@ -134,6 +147,7 @@ const restaurantSlice = createSlice({
 });
 
 export default restaurantSlice.reducer;
+export const { setDefault } = restaurantSlice.actions;
 
 const loading = (state: RootState) => state.restaurant.loading;
 const error = (state: RootState) => state.restaurant.error;

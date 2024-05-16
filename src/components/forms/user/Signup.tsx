@@ -22,11 +22,14 @@ import {
   Button,
   LoadingButton,
 } from "@/components";
+import { Eye, EyeOff } from "lucide-react";
+import { useState } from "react";
 
 const Signup = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { loading } = useAppSelector(getAuthStatus);
+  const [showPassword, setShowPassword] = useState(false);
 
   const form = useForm<TSignupCredentialsValidator>({
     resolver: zodResolver(SignupCredentialsValidator),
@@ -87,7 +90,25 @@ const Signup = () => {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input placeholder="password" {...field} disabled={loading} />
+                  <div className=" relative flex items-center">
+                    <Input
+                      placeholder="password"
+                      {...field}
+                      disabled={loading}
+                      type={showPassword ? "text" : "password"}
+                    />
+                    {showPassword ? (
+                      <EyeOff
+                        className="absolute right-2 cursor-pointer text-slate-600"
+                        onClick={() => setShowPassword(false)}
+                      />
+                    ) : (
+                      <Eye
+                        className="absolute right-2 cursor-pointer text-slate-600"
+                        onClick={() => setShowPassword(true)}
+                      />
+                    )}
+                  </div>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -101,7 +122,12 @@ const Signup = () => {
               <FormItem>
                 <FormLabel>Password Confirm</FormLabel>
                 <FormControl>
-                  <Input placeholder="password" {...field} disabled={loading} />
+                  <Input
+                    placeholder="password"
+                    {...field}
+                    disabled={loading}
+                    type={showPassword ? "text" : "password"}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -118,7 +144,10 @@ const Signup = () => {
               Sign up
             </Button>
           )}
-          <Link to="/login">Already have an account? Login</Link>
+          <Link to="/login">
+            Already have an account?{" "}
+            <span className=" underline text-orange-500">Login</span>
+          </Link>
         </form>
       </Form>
     </>

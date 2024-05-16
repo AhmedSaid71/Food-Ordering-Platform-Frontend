@@ -2,7 +2,12 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { getRestaurant } from "@/services";
-import { getRestaurantInfo, getRestaurantStatus, getCartDiff } from "@/store";
+import {
+  getRestaurantInfo,
+  getRestaurantStatus,
+  getCartDiff,
+  getOrdersData,
+} from "@/store";
 import {
   Spinner,
   AspectRatio,
@@ -21,6 +26,7 @@ const Restaurant = () => {
   const { id } = useParams();
   const { loading } = useAppSelector(getRestaurantStatus);
   const diff = useAppSelector(getCartDiff);
+  const orders = useAppSelector(getOrdersData);
 
   useEffect(() => {
     dispatch(getRestaurant(id as string));
