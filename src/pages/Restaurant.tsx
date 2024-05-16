@@ -6,7 +6,6 @@ import {
   getRestaurantInfo,
   getRestaurantStatus,
   getCartDiff,
-  getOrdersData,
 } from "@/store";
 import {
   Spinner,
@@ -26,7 +25,6 @@ const Restaurant = () => {
   const { id } = useParams();
   const { loading } = useAppSelector(getRestaurantStatus);
   const diff = useAppSelector(getCartDiff);
-  const orders = useAppSelector(getOrdersData);
 
   useEffect(() => {
     dispatch(getRestaurant(id as string));
